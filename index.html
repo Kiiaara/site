@@ -8,13 +8,23 @@
     <meta name="description" content="Influence Marketing Manager - Портфолио проектов и кейсов">
     <meta property="og:title" content="Ткачева Валерия | Influence Marketing Portfolio">
     <meta property="og:description" content="Более 25 успешных кейсов со стримерами и блогерами в iGaming и Tech">
-    <meta property="og:image" content="img1.webp">
+    <!-- Был img1.webp - такого файла в репозитории нет, превью в соцсетях не работало.
+         Соцсетям нужен абсолютный URL, относительный путь они не резолвят -->
+    <meta property="og:image" content="https://tkacheva-media.ru/profile.webp">
     <meta property="og:type" content="website">
 
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <!-- Был favicon.svg на 714 КБ (PNG 1558x1558 в base64 внутри SVG) - грузился раньше контента -->
+    <link rel="icon" type="image/png" href="favicon-64.png">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <link href="./aos.css" rel="stylesheet">
+    <style>
+        /* Страховка на случай, если aos.js не загрузился или упал:
+           через 2 секунды принудительно показываем всё, что AOS спрятал */
+        .aos-fallback [data-aos] { opacity: 1 !important; transform: none !important; }
+    </style>
     <style>
         :root {
             --bg-dark: #020d06;
@@ -53,17 +63,21 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
-        html, body { 
-            overflow-x: clip; 
-            width: 100%; 
-            position: relative; 
+        html, body {
+            /* hidden - фоллбек для Safari до 16, clip поддерживается только с 16.0 */
+            overflow-x: hidden;
+            overflow-x: clip;
+            width: 100%;
+            position: relative;
         }
 
         /* Убираем фон у body, чтобы он не перекрывал canvas */
-body { 
-    font-family: 'Inter', sans-serif; 
-    background: transparent !important; /* Обязательно! */
-    color: var(--text-white); 
+body {
+    font-family: 'Inter', sans-serif;
+    /* Тёмный фон дублируем на body: если canvas не стартовал (ошибка JS,
+       нет памяти на слабом телефоне) - страница всё равно тёмная, а не белая */
+    background: var(--bg-dark);
+    color: var(--text-white);
     line-height: 1.6;
     display: block; 
     min-height: 100vh;
@@ -552,7 +566,16 @@ body {
     <script src="./aos.js"></script>
     <script>
         const isMobile = window.innerWidth < 768;
-        AOS.init({ duration: 800, once: true });
+        // AOS может не загрузиться - тогда его вызов уронил бы весь скрипт
+        try {
+            if (typeof AOS !== 'undefined') AOS.init({ duration: 800, once: true });
+        } catch (e) { console.error('AOS init failed:', e); }
+
+        // Если через 2 секунды контент всё ещё скрыт - показываем принудительно
+        setTimeout(() => {
+            const hidden = document.querySelector('[data-aos]:not(.aos-animate)');
+            if (hidden) document.body.classList.add('aos-fallback');
+        }, 2000);
 
         let currentLang = 'ru';
         let currentModalIndex = 0;
@@ -676,11 +699,21 @@ body {
             },            { img: "photo_2026-04-22_19-56-15.webp", tag: "Games", title: {ru:"NTE",en:"NTE",zh:"NTE"}, mini:{ru:"57к+ просмотров",en:"57k+ views",zh:"5.7万+ 观看次数"}, task:{ru:"Просмотр официального трейлера к запуску игры",en:"Official launch trailer reaction",zh:"Official launch trailer reaction"}, doing:{ru:["Реферальные ссылки и проведение спецстримов на каналах soonvooshko, tupa_chil, redpandash, mixazver, vikiblade, didishkatv, 404t4ga"],en:["Referral links and special streams on the soonvooshko, tupa_chil, redpandash, mixazver, vikiblade, didishkatv, and 404t4ga channels"],zh:["在 soonvooshko, tupa_chil, redpandash, mixazver, vikiblade, didishkatv, 404t4ga 频道放置推荐链接并举办专题直播"]}, result:{ru:["Более 22 тыс. просмотров трансляции soonvooshko","Более 16 тыс. просмотров трансляции tupa_chil","Более 14 тыс. просмотров трансляции mixazver"],en:["More than 22k views (soonvooshko)","More than 16k views (tupa_chil)","More than 14k views (mixazver)"],zh:["超过 2.2 万次观看 (soonvooshko)","超过 1.6 万次观看 (tupa_chil)","超过 1.4 万次观看 (mixazver)"]} },
             { img: "photo 2026-05-06 144335.webp", tag: "Special Project", title: {ru:"DXracer",en:"DXracer",zh:"DXracer"}, mini:{ru:"93к+ просмотров",en:"93k+ views",zh:"9.3 万+ 观看量"}, task:{ru:"Интеграция в стрим с игровым креслом",en:"Integration into a stream with a gaming chair",zh:"Integration into a stream with a gaming chair"}, doing:{ru:["Размещение реферальных ссылок","Интеграция на канале tpabomah"],en:["Placement of referral links","Integration on the tpabomah channel"],zh:["放置推荐链接","tpabomah 频道内容植入"]}, result:{ru:["93к+ просмотров прямой трансляции с интеграцией на канале tpabomah"],en:["93k+ views of the live stream with integration on the tpabomah channel"],zh:["tpabomah 频道植入内容的直播观看量超过 9.3 万"]} }
 ];
+        // Safari на iOS кидает SecurityError при обращении к localStorage,
+        // если включено "Запретить межсайтовое отслеживание" или приватная вкладка.
+        // Поэтому любой доступ к хранилищу - только через эти обёртки.
+        function safeStorageGet(key) {
+            try { return localStorage.getItem(key); } catch (e) { return null; }
+        }
+        function safeStorageSet(key, value) {
+            try { localStorage.setItem(key, value); } catch (e) { /* приватный режим - молча живём дальше */ }
+        }
+
         function changeLang(lang) {
             currentLang = lang;
             // ЗАПИСЫВАЕМ В ПАМЯТЬ:
-    localStorage.setItem('preferredLang', lang);
-            
+    safeStorageSet('preferredLang', lang);
+
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.innerText.toLowerCase() === lang));
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
@@ -710,7 +743,7 @@ body {
         // --- ВОТ ТУТ ПРАВКА ДЛЯ КАРТИНКИ В СЕТКЕ ---
         const gridImgHtml = c.img && c.img !== "_________________" 
             ? `<div style="width:100%; height:180px; border-radius:20px; margin-bottom:15px; overflow:hidden; border: 1px solid rgba(181, 242, 161, 0.1);">
-                <img src="${c.img}" style="width:100%; height:100%; object-fit:cover;">
+                <img src="${c.img}" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover;">
                </div>`
             : `<div style="width:100%; height:180px; background:rgba(255,255,255,0.02); border-radius:20px; margin-bottom:15px; display:flex; align-items:center; justify-content:center; border: 1px dashed rgba(181, 242, 161, 0.2); color: #666; font-size: 0.8rem; text-transform: uppercase; text-align: center; padding: 20px;">
                 Изображение ожидается
@@ -729,7 +762,8 @@ body {
 
         function filterCases(tag) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            const clickedBtn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.getAttribute('onclick').includes(`'${tag}'`));
+            // getAttribute может вернуть null - без проверки тут падало всё
+            const clickedBtn = Array.from(document.querySelectorAll('.filter-btn')).find(b => (b.getAttribute('onclick') || '').includes(`'${tag}'`));
             if (clickedBtn) clickedBtn.classList.add('active');
             renderCases(tag);
         }
@@ -841,21 +875,32 @@ body {
 
 // Оставляем только один этот блок в самом конце скриптов
 document.addEventListener('DOMContentLoaded', () => {
+    // Каждый шаг в своём try/catch: падение одного блока не должно
+    // убивать остальные (раньше любая ошибка оставляла пустую белую страницу)
+
     // 1. Восстанавливаем язык (автоматически запустит renderCases)
-    const savedLang = localStorage.getItem('preferredLang') || 'ru';
-    changeLang(savedLang);
+    try {
+        const savedLang = safeStorageGet('preferredLang') || 'ru';
+        changeLang(savedLang);
+    } catch (e) {
+        console.error('changeLang failed:', e);
+        // Кейсы важнее языка - рендерим их напрямую
+        try { renderCases('all'); } catch (e2) { console.error(e2); }
+    }
 
     // 2. Инициализируем фон
-    initBg(); 
-    animate();
+    try {
+        initBg();
+        animate();
+    } catch (e) { console.error('background failed:', e); }
 
     // 3. Запускаем анимации
-    initStatAnimation();
-    animateStats();
+    try { initStatAnimation(); } catch (e) { console.error(e); }
+    try { animateStats(); } catch (e) { console.error(e); }
 
     // 4. Фикс для обновления в середине страницы
     setTimeout(() => {
-        initBg();
+        try { initBg(); } catch (e) { console.error(e); }
     }, 150);
 });
 
