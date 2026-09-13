@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест</title>
+    <style>
+        body { background: #020d06; color: #fff; font-family: sans-serif; padding: 40px 20px; }
+        h1 { color: #b5f2a1; }
+        .box { background: rgba(13,45,27,0.9); padding: 20px; border-radius: 20px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Тест страницы</h1>
+    <p>Если ты это видишь - HTML и CSS работают нормально.</p>
+    <div class="box">
+        <p>Блок с фоном и скруглением.</p>
+    </div>
+    <div class="box">
+        <p id="js-test">JS не отработал</p>
+    </div>
+    <script>
+        // Простейшая проверка: если JS жив, текст поменяется
+        document.getElementById('js-test').textContent = 'JS работает! Версия Safari: ' + navigator.userAgent;
+    </script>
+</body>
+</html>
