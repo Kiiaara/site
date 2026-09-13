@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диагностика</title>
+    <style>
+        body { background: #111; color: #fff; font-family: monospace; padding: 15px; font-size: 14px; }
+        .ok { color: #4caf50; }
+        .fail { color: #ff5252; }
+        #log div { padding: 6px 0; border-bottom: 1px solid #333; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <h2>Диагностика сайта</h2>
+    <div id="log"></div>
+
+    <script>
+        // Ловим любую ошибку и показываем на экране
+        var log = document.getElementById('log');
+        function say(text, ok) {
+            var d = document.createElement('div');
+            d.className = ok ? 'ok' : 'fail';
+            d.textContent = (ok ? '[OK] ' : '[ОШИБКА] ') + text;
+            log.appendChild(d);
+        }
+        window.onerror = function(msg, src, line, col) {
+            say('JS упал: ' + msg + ' (строка ' + line + ')', false);
+            return true;
+        };
+
+        say('Скрипт запустился', true);
+        say('Safari: ' + navigator.userAgent, true);
+
+        // Проверяем localStorage - подозреваемый номер один
+        try {
+            localStorage.setItem('t', '1');
+            localStorage.removeItem('t');
+            say('localStorage работает', true);
+        } catch (e) {
+            say('localStorage заблокирован: ' + e.name + ' - ' + e.message, false);
+        }
+
+        // Проверяем загрузку aos.js
+        var s = document.createElement('script');
+        s.src = './aos.js';
+        s.onload = function() {
+            say('aos.js загрузился, AOS = ' + (typeof AOS), true);
+            try {
+                AOS.init({ duration: 800, once: true });
+                say('AOS.init отработал', true);
+            } catch (e) {
+                say('AOS.init упал: ' + e.message, false);
+            }
+        };
+        s.onerror = function() { say('aos.js НЕ загрузился', false); };
+        document.body.appendChild(s);
+
+        // Проверяем canvas
+        try {
+            var c = document.createElement('canvas');
+            var ctx = c.getContext('2d');
+            say('canvas 2d: ' + (ctx ? 'работает' : 'НЕТ контекста'), !!ctx);
+        } catch (e) {
+            say('canvas упал: ' + e.message, false);
+        }
+
+        // Проверяем IntersectionObserver
+        say('IntersectionObserver: ' + (typeof IntersectionObserver !== 'undefined' ? 'есть' : 'НЕТ'),
+            typeof IntersectionObserver !== 'undefined');
+
+        // Грузим основную страницу и смотрим, доходит ли целиком
+        fetch('./index.html')
+            .then(function(r) { return r.text(); })
+            .then(function(t) {
+                say('index.html скачался: ' + t.length + ' символов', true);
+                say('конец файла на месте: ' + (t.indexOf('</html>') > -1 ? 'да' : 'НЕТ, файл обрезан'),
+                    t.indexOf('</html>') > -1);
+            })
+            .catch(function(e) { say('index.html не скачался: ' + e.message, false); });
+    </script>
+</body>
+</html>
