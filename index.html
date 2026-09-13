@@ -21,9 +21,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <link href="./aos.css" rel="stylesheet">
     <style>
-        /* Страховка на случай, если aos.js не загрузился или упал:
-           через 2 секунды принудительно показываем всё, что AOS спрятал */
-        .aos-fallback [data-aos] { opacity: 1 !important; transform: none !important; }
+        /* Контент виден ВСЕГДА. Раньше при недоехавшем по сети aos.js
+           страница оставалась пустой: AOS прячет элементы через opacity:0,
+           а показать их было некому. Теперь анимации включаются только
+           если библиотека реально загрузилась (класс aos-ready на body). */
+        [data-aos] { opacity: 1 !important; transform: none !important; }
+        body.aos-ready [data-aos] { opacity: 0 !important; }
+        body.aos-ready [data-aos].aos-animate { opacity: 1 !important; transform: none !important; }
     </style>
     <style>
         :root {
@@ -566,16 +570,17 @@ body {
     <script src="./aos.js"></script>
     <script>
         const isMobile = window.innerWidth < 768;
-        // AOS может не загрузиться - тогда его вызов уронил бы весь скрипт
+        // Анимации включаем ТОЛЬКО если библиотека реально загрузилась.
+        // Не загрузилась (оборвалась сеть) - контент просто виден без анимаций.
         try {
-            if (typeof AOS !== 'undefined') AOS.init({ duration: 800, once: true });
-        } catch (e) { console.error('AOS init failed:', e); }
-
-        // Если через 2 секунды контент всё ещё скрыт - показываем принудительно
-        setTimeout(() => {
-            const hidden = document.querySelector('[data-aos]:not(.aos-animate)');
-            if (hidden) document.body.classList.add('aos-fallback');
-        }, 2000);
+            if (typeof AOS !== 'undefined') {
+                document.body.classList.add('aos-ready');
+                AOS.init({ duration: 800, once: true });
+            }
+        } catch (e) {
+            console.error('AOS init failed:', e);
+            document.body.classList.remove('aos-ready');
+        }
 
         let currentLang = 'ru';
         let currentModalIndex = 0;
