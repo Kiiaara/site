@@ -409,14 +409,15 @@ body {
 
 /* Правки для мобилок, чтобы "магия" не вышла из-под контроля */
 @media (max-width: 768px) {
-    /* Стрелки листания: на телефоне были 60px и налезали на заголовок и картинку.
-       Мельче, полупрозрачнее и вплотную к краям экрана */
-    .modal-nav-overlay { padding: 0 4px; }
+    /* Стрелки листания на телефоне: базовые 60px налезали на заголовок.
+       Отступ от краёв обязателен - у самой кромки iOS перехватывает
+       свайп «назад», и кнопка бы не нажималась */
+    .modal-nav-overlay { padding: 0 18px; }
     .nav-btn {
-        width: 34px; height: 34px; font-size: 0.95rem;
-        background: rgba(7, 26, 15, 0.55);
-        border-color: rgba(46, 204, 113, 0.5);
-        opacity: 0.7;
+        width: 44px; height: 44px; font-size: 1.2rem;
+        background: rgba(7, 26, 15, 0.65);
+        border-color: rgba(46, 204, 113, 0.6);
+        opacity: 0.85;
     }
 
     .quote-box {
