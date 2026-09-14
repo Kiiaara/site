@@ -255,7 +255,8 @@ body {
             .nav-links a { font-size: 0.85rem; }
             .lang-btn { padding: 4px 9px; font-size: 0.7rem; border-radius: 5px; }
 
-            .hero { margin-top: 120px; width: 100%; align-items: center; text-align: center; }
+            /* Отступ под хедер берём из той же замеренной переменной */
+            .hero { margin-top: calc(var(--header-h, 88px) + 30px); width: 100%; align-items: center; text-align: center; }
             .section { padding: 40px 20px; width: 100%; align-items: center; text-align: center; }
             h2 { font-size: 2rem; text-align: center; }
             .about-layout { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 30px; }
@@ -280,7 +281,9 @@ body {
             /* Фильтры в одну строку с прокруткой: раньше 4 кнопки
                переносились на два ряда и занимали пол-экрана */
             .filter-container {
-                top: 88px !important; padding: 8px 10px;
+                /* Высоту хедера замеряет JS и кладёт в --header-h:
+                   жёсткое число разъезжалось, когда хедер менял высоту */
+                top: var(--header-h, 88px) !important; padding: 8px 10px;
                 background: rgba(2, 13, 6, 0.4) !important;
                 flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;
                 gap: 8px; margin-bottom: 18px;
@@ -654,8 +657,8 @@ body {
                 </ul>
 
                 <div class="vm-grid">
-                    <div class="vm-item"><h3 data-i18n="v_title">Видение</h3><p data-i18n="v_text">Мир, где каждый бренд находит свою уникальную историю</p></div>
-                    <div class="vm-item"><h3 data-i18n="m_title">Миссия</h3><p data-i18n="m_text">Превращать сотрудничество с инфлюенсерами в эффективный инструмент маркетинга</p></div>
+                    <div class="vm-item"><h3 data-i18n="v_title">Старт за сутки</h3><p data-i18n="v_text">Большинство площадок готовы выйти в эфир уже на следующий день после согласования</p></div>
+                    <div class="vm-item"><h3 data-i18n="m_title">Тематики</h3><p data-i18n="m_text">iGaming, шутеры, MMORPG, мобайл, киберспортивные турниры и офлайн-мероприятия</p></div>
                 </div>
             </div>
             <div class="profile-card" data-aos="fade-left">
@@ -734,8 +737,8 @@ body {
                 about_text_1: "Меня зовут Валерия. Я — специалист по работе с популярными стримерами и блогерами. Уже более двух лет успешно занимаюсь продвижением брендов в сферах iGaming и организации масштабных мероприятий",
                 about_li_1: "Реализация комплексных рекламных кампаний", about_li_2: "Проведение мероприятий с топовыми инфлюенсерами",
                 about_li_3: "Тесные связи с ведущими рекламодателями",
-                v_title: "Видение", v_text: "Мир, где каждый бренд находит свою уникальную историю",
-                m_title: "Миссия", m_text: "Превращать сотрудничество с инфлюенсерами в эффективный инструмент маркетинга",
+                v_title: "Старт за сутки", v_text: "Большинство площадок готовы выйти в эфир уже на следующий день после согласования",
+                m_title: "Тематики", m_text: "iGaming, шутеры, MMORPG, мобайл, киберспортивные турниры и офлайн-мероприятия",
                 quote: "Настоящий успех бренда начинается там, где заканчивается боязнь выйти за рамки привычных соцсетей",
                 desc: "Описание:", tasks: "Что сделано:", results: "Результат:",
                 btn_prev: "← Назад", btn_next: "Вперед →",
@@ -749,8 +752,8 @@ body {
                 about_text_1: "Expert in working with popular streamers and bloggers. For over two years, I have been successfully promoting brands in iGaming and organizing large-scale events",
                 about_li_1: "Execution of comprehensive advertising campaigns", about_li_2: "Organizing events with top-tier influencers",
                 about_li_3: "Strong ties with leading advertisers",
-                v_title: "Vision", v_text: "A world where every brand finds its unique story",
-                m_title: "Mission", m_text: "Turning influencer collaborations into an effective marketing tool",
+                v_title: "Launch in a day", v_text: "Most channels are ready to go live the day after the deal is agreed",
+                m_title: "Verticals", m_text: "iGaming, shooters, MMORPG, mobile, esports tournaments and offline events",
                 quote: "True brand success begins where the fear of going beyond traditional social media ends",
                 desc: "Description:", tasks: "What was done:", results: "Result:",
                 btn_prev: "← Previous", btn_next: "Next →",
@@ -764,8 +767,8 @@ body {
                 about_text_1: "专注于流行主播和博主的专家。在 iGaming 推广和大型活动组织领域拥有超过两年的成功经验",
                 about_li_1: "执行综合广告活动", about_li_2: "与顶尖意见领袖共同举办活动",
                 about_li_3: "与领先广告商保持密切联系",
-                v_title: "愿景", v_text: "每个品牌都能找到自己独特故事的世界",
-                m_title: "使命", m_text: "将博主合作转化为有效的营销工具",
+                v_title: "次日开播", v_text: "多数主播在确认合作后第二天即可开播",
+                m_title: "覆盖领域", m_text: "iGaming、射击、MMORPG、手游、电竞赛事及线下活动",
                 quote: "品牌的真正成功始于打破对传统社交媒体的依赖",
                 desc: "描述:", tasks: "执行内容:", results: "结果:",
                 btn_prev: "← 返回", btn_next: "下一个 →",
@@ -1184,6 +1187,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('resize', initBg);
+
+        // Меряем реальную высоту хедера и кладём в CSS-переменную.
+        // Фильтры липнут под него, и жёсткое число разъезжалось, когда
+        // хедер менял высоту (другой шрифт, поворот экрана, узкий телефон)
+        function syncHeaderHeight() {
+            const header = document.querySelector('header');
+            if (!header) return;
+            const h = Math.round(header.getBoundingClientRect().height);
+            if (h > 0) document.documentElement.style.setProperty('--header-h', h + 'px');
+        }
+
+        syncHeaderHeight();
+        window.addEventListener('resize', syncHeaderHeight);
+        window.addEventListener('orientationchange', () => setTimeout(syncHeaderHeight, 120));
+        // Шрифт Inter подгружается позже и меняет высоту строк - пересчитываем
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(syncHeaderHeight).catch(() => {});
+        }
 
         function animateStats() {
     const stats = document.querySelectorAll('.stat-number');
