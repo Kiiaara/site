@@ -891,30 +891,15 @@ body {
                 this.speedY = (Math.random() - 0.5) * 0.55 * this.depth;
                 this.alpha = Math.random() * 0.4 + 0.25;
                 this.fade = (Math.random() * 0.004 + 0.0015);
-                this.vx = 0; this.vy = 0;   // добавка от курсора, гаснет сама
                 this.born = 0;
             }
             update() {
                 if (this.born < 1) this.born = Math.min(1, this.born + 0.02);
 
-                // Мягкое отталкивание от курсора - частицы расступаются
-                if (mouse.x !== null) {
-                    const dx = this.x - mouse.x, dy = this.y - mouse.y;
-                    const dist = Math.hypot(dx, dy);
-                    const R = 170;
-                    if (dist < R && dist > 0.1) {
-                        const push = (1 - dist / R) * 0.9 * this.depth;
-                        this.vx += (dx / dist) * push;
-                        this.vy += (dy / dist) * push;
-                    }
-                }
-
-                this.x += this.speedX + this.vx;
-                this.y += this.speedY + this.vy;
-
-                // Инерция гаснет, частица возвращается к спокойному дрейфу
-                this.vx *= 0.94;
-                this.vy *= 0.94;
+                // Спокойный ровный дрейф, курсор на движение не влияет -
+                // он только притягивает светящиеся нити (см. connect)
+                this.x += this.speedX;
+                this.y += this.speedY;
 
                 // Заворачиваем по краям вместо отскока - выглядит бесшовно
                 if (this.x < -20) this.x = width + 20;
