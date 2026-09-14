@@ -285,15 +285,16 @@ body {
                    жёсткое число разъезжалось, когда хедер менял высоту */
                 top: var(--header-h, 88px) !important; padding: 8px 10px;
                 background: rgba(2, 13, 6, 0.4) !important;
-                flex-wrap: nowrap; overflow-x: visible; justify-content: stretch;
+                flex-wrap: nowrap; overflow-x: visible; justify-content: center;
                 gap: 5px; margin-bottom: 18px;
             }
             .filter-btn {
-                /* Кнопки делят ширину поровну и ужимаются под экран:
-                   4 штуки должны влезать без прокрутки даже на узких телефонах */
-                padding: 7px 4px; font-size: 0.72rem; border-width: 1px;
-                white-space: nowrap; flex: 1 1 0; min-width: 0;
-                letter-spacing: 0;
+                /* Ширина по длине слова, а не поровну: при равных долях
+                   длинное «Спецпроекты» не влезало в свою и вылезало за рамку.
+                   Шрифт в em - ужимается вместе с кнопкой на узких экранах */
+                padding: 7px 10px; font-size: clamp(0.6rem, 2.7vw, 0.78rem);
+                border-width: 1px; white-space: nowrap;
+                flex: 0 1 auto; min-width: 0; letter-spacing: 0;
             }
             .filter-btn.active { box-shadow: 0 0 12px rgba(46, 204, 113, 0.35); }
 
