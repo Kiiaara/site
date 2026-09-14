@@ -399,11 +399,14 @@ body {
 }
 .lead-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .lead-field { display: block; margin-bottom: 14px; }
+/* Подпись поля занимала всю строку, и звёздочка переносилась вниз.
+   Теперь подпись строчная, а перенос делает сам input (он блочный) */
 .lead-field span {
-    display: block; margin-bottom: 6px;
+    display: inline; margin-bottom: 6px;
     font-size: 0.82rem; font-weight: 800; letter-spacing: 1px;
     text-transform: uppercase; color: var(--accent-light);
 }
+.lead-field input, .lead-field textarea { margin-top: 6px; }
 .lead-field input, .lead-field textarea {
     width: 100%; padding: 12px 14px;
     background: rgba(255, 255, 255, 0.04);
