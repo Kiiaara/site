@@ -12,6 +12,15 @@
          Соцсетям нужен абсолютный URL, относительный путь они не резолвят -->
     <meta property="og:image" content="https://tkacheva-media.ru/profile.webp">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tkacheva-media.ru/">
+    <meta property="og:site_name" content="TKACHEVA MEDIA">
+    <meta property="og:locale" content="ru_RU">
+    <!-- Без этих тегов ссылка в Telegram и X показывалась без превью -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ткачева Валерия | Influence Marketing">
+    <meta name="twitter:description" content="Более 25 успешных кейсов со стримерами и блогерами в iGaming и Tech">
+    <meta name="twitter:image" content="https://tkacheva-media.ru/profile.webp">
+    <link rel="canonical" href="https://tkacheva-media.ru/">
 
     <!-- Был favicon.svg на 714 КБ (PNG 1558x1558 в base64 внутри SVG) - грузился раньше контента -->
     <link rel="icon" type="image/png" href="favicon-64.png">
@@ -750,7 +759,7 @@ body {
         // --- ВОТ ТУТ ПРАВКА ДЛЯ КАРТИНКИ В СЕТКЕ ---
         const gridImgHtml = c.img && c.img !== "_________________" 
             ? `<div style="width:100%; height:180px; border-radius:20px; margin-bottom:15px; overflow:hidden; border: 1px solid rgba(181, 242, 161, 0.1);">
-                <img src="${c.img}" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover;">
+                <img src="${c.img}" alt="${c.title[currentLang]}" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover;">
                </div>`
             : `<div style="width:100%; height:180px; background:rgba(255,255,255,0.02); border-radius:20px; margin-bottom:15px; display:flex; align-items:center; justify-content:center; border: 1px dashed rgba(181, 242, 161, 0.2); color: #666; font-size: 0.8rem; text-transform: uppercase; text-align: center; padding: 20px;">
                 Изображение ожидается
@@ -780,7 +789,7 @@ body {
     currentModalIndex = index;
     const c = allCases[index];
     const imgHtml = c.img && c.img !== "_________________" 
-        ? `<img src="${c.img}" class="modal-main-img">` 
+        ? `<img src="${c.img}" alt="${c.title[currentLang]}" loading="lazy" decoding="async" class="modal-main-img">`
         : `<div style="height:250px; background: rgba(255,255,255,0.03); border-radius:25px; margin-bottom:35px; display:flex; align-items:center; justify-content:center; color: var(--accent-light); border: 1px dashed rgba(46, 204, 113, 0.3); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;">Изображение ожидается</div>`;
     
     document.getElementById('modal-body').innerHTML = `
@@ -805,11 +814,20 @@ body {
             openModal(currentModalIndex);
         }
 
-        function closeModal() { 
+        function closeModal() {
     const modal = document.getElementById('projectModal');
     modal.style.display = 'none'; // Скрываем полностью
     document.body.style.overflow = 'auto';
 }
+
+        // Управление модалкой с клавиатуры: Esc закрывает, стрелки листают кейсы
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('projectModal');
+            if (!modal || modal.style.display !== 'flex') return;
+            if (e.key === 'Escape') closeModal();
+            else if (e.key === 'ArrowRight') nextCase();
+            else if (e.key === 'ArrowLeft') prevCase();
+        });
 
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
