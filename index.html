@@ -232,13 +232,14 @@ body {
         .filter-btn { background: rgba(255,255,255,0.05); border: 2px solid rgba(181, 242, 161, 0.2); color: white; padding: 12px 26px; border-radius: 50px; cursor: pointer; font-size: 1.1rem; font-weight: 800; transition: 0.3s; }
         .filter-btn.active { background: var(--btn-green); color: var(--bg-dark); border-color: var(--btn-green); box-shadow: 0 0 20px rgba(46, 204, 113, 0.4); }
 
-        .cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; width: 100%; }
-        .case-card { background: var(--bg-card); padding: 30px; border-radius: 30px; border: 1px solid rgba(181, 242, 161, 0.05); transition: 0.4s; cursor: pointer; display: flex; flex-direction: column; }
+        .cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; width: 100%; }
+        /* Поля ужаты с 30px: вокруг текста было слишком много воздуха */
+        .case-card { background: var(--bg-card); padding: 18px 18px 20px; border-radius: 24px; border: 1px solid rgba(181, 242, 161, 0.05); transition: 0.4s; cursor: pointer; display: flex; flex-direction: column; }
         .case-card:hover { transform: translateY(-12px); border-color: var(--btn-green); box-shadow: 0 0 60px rgba(46, 204, 113, 0.3); background: rgba(15, 55, 30, 0.98); }
 
-        .case-tag { color: var(--btn-green); font-weight: 900; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1.5px; }
+        .case-tag { color: var(--btn-green); font-weight: 900; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1.5px; }
         .case-card h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
-        .case-result-mini { margin-top: auto; padding-top: 20px; font-weight: 800; color: var(--accent-light); font-size: 1rem; }
+        .case-result-mini { margin-top: auto; padding-top: 12px; font-weight: 800; color: var(--accent-light); font-size: 1rem; }
 
         @media (max-width: 900px) {
             nav { flex-direction: column; gap: 8px; padding: 10px 20px; width: 100%; align-items: center; }
@@ -253,8 +254,18 @@ body {
             .profile-card { width: 100%; }
             .profile-img { height: 400px; width: 100%; }
             .cases-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
-            .case-card { padding: 15px 10px; }
+            .case-card { padding: 12px 10px 14px; border-radius: 18px; }
             .case-card h3 { font-size: 0.9rem; }
+
+            /* На телефоне поля модалки ещё меньше - экран узкий, воздух лишний */
+            .modal { padding: 10px; }
+            .modal-content { padding: 18px 16px 22px; border-radius: 26px; max-height: 94vh; }
+            .modal-main-img { margin-top: 26px; margin-bottom: 20px; border-radius: 18px; }
+            .close-modal { font-size: 2.2rem; margin: -4px -4px 2px 0; }
+            .modal-body h2 { font-size: 1.6rem; margin-bottom: 16px; }
+            .modal-body h4 { margin: 22px 0 10px 0; font-size: 1rem; }
+            .modal-body p, .modal-body li { font-size: 1rem; line-height: 1.65; }
+            .modal-body li { padding-left: 18px; margin-bottom: 9px; }
             .filter-container { top: 122px !important; padding: 10px; background: rgba(2, 13, 6, 0.4) !important; }
             .logo { font-size: 1.2rem !important; letter-spacing: 1px; }
             footer { padding: 15px 10px !important; }
@@ -265,8 +276,31 @@ body {
             background: rgba(2, 13, 6, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); 
             z-index: 5000; justify-content: center; align-items: center; padding: 20px; 
         }
-        .modal-content { background: #071a0f; padding: 45px; border-radius: 35px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; border: 1px solid var(--btn-green); }
-        .close-modal { position: sticky; top: 0; float: right; margin-right: -10px; margin-top: -10px; font-size: 3.5rem; color: var(--accent-light); cursor: pointer; line-height: 1; text-shadow: 0 0 15px rgba(181, 242, 161, 0.5); }
+        .modal-content {
+            background: #071a0f; padding: 28px 30px 32px; border-radius: 35px;
+            max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto;
+            position: relative; border: 1px solid var(--btn-green);
+            /* Скролл в цвет сайта вместо серого системного */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(46, 204, 113, 0.5) transparent;
+        }
+        /* То же для Safari и Chrome - они не понимают scrollbar-color */
+        .modal-content::-webkit-scrollbar { width: 8px; }
+        .modal-content::-webkit-scrollbar-track { background: transparent; margin: 20px 0; }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: rgba(46, 204, 113, 0.45); border-radius: 10px;
+        }
+        .modal-content::-webkit-scrollbar-thumb:hover { background: rgba(46, 204, 113, 0.75); }
+
+        /* Крестик вынесен над картинкой: раньше налезал на неё сверху */
+        .close-modal {
+            position: sticky; top: 0; float: right;
+            margin: -8px -8px 4px 0; font-size: 2.6rem;
+            color: var(--accent-light); cursor: pointer; line-height: 1;
+            text-shadow: 0 0 15px rgba(181, 242, 161, 0.5);
+            z-index: 10; transition: 0.25s;
+        }
+        .close-modal:hover { color: var(--btn-green); transform: scale(1.1); }
         .modal-nav-overlay { position: fixed; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 40px; pointer-events: none; z-index: 5100; width: 100%; }
         .nav-btn { pointer-events: auto; background: rgba(7, 26, 15, 0.8); border: 1px solid var(--btn-green); color: var(--btn-green); width: 60px; height: 60px; border-radius: 50%; cursor: pointer; font-weight: 800; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
         .modal-main-img {
@@ -278,7 +312,10 @@ body {
             object-position: center;
             display: block;
             border-radius: 25px;
-            margin-bottom: 35px;
+            /* Отступ сверху, чтобы картинка начиналась ниже крестика
+               (он float:right, а блочная картинка обтекание игнорирует) */
+            margin-top: 34px;
+            margin-bottom: 28px;
             border: 1px solid rgba(181, 242, 161, 0.2);
             background: rgba(255, 255, 255, 0.03);
         }
