@@ -385,6 +385,62 @@ body {
 }
 
 /* Убираем стандартный синий для посещенных ссылок */
+/* ---- Форма заявки ---- */
+.lead-form {
+    width: 100%; max-width: 760px; margin: 10px auto 40px auto;
+    background: var(--bg-card); padding: 30px;
+    border-radius: 28px; border: 1px solid rgba(181, 242, 161, 0.12);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    text-align: left;
+}
+.lead-form-intro {
+    color: var(--accent-light); font-size: 1rem;
+    margin-bottom: 22px; text-align: center; line-height: 1.5;
+}
+.lead-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.lead-field { display: block; margin-bottom: 14px; }
+.lead-field span {
+    display: block; margin-bottom: 6px;
+    font-size: 0.82rem; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--accent-light);
+}
+.lead-field input, .lead-field textarea {
+    width: 100%; padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(181, 242, 161, 0.18);
+    border-radius: 14px; color: #fff;
+    font-family: inherit; font-size: 1rem;
+    transition: 0.25s; resize: vertical;
+}
+.lead-field input:focus, .lead-field textarea:focus {
+    outline: none; border-color: var(--btn-green);
+    background: rgba(46, 204, 113, 0.07);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.12);
+}
+/* Поле-ловушка: убрано с экрана, но доступно ботам */
+.lead-trap {
+    position: absolute; left: -9999px; width: 1px; height: 1px;
+    opacity: 0; pointer-events: none;
+}
+.lead-submit {
+    width: 100%; margin-top: 8px; padding: 16px 30px;
+    font-size: 1rem;
+}
+.lead-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+.lead-status {
+    margin-top: 14px; text-align: center; min-height: 22px;
+    font-weight: 700; font-size: 0.95rem;
+}
+.lead-status.ok { color: var(--btn-green); }
+.lead-status.err { color: #ff6b6b; }
+
+/* На телефоне поля в одну колонку - в две они слишком узкие */
+@media (max-width: 700px) {
+    .lead-form { padding: 20px 16px; border-radius: 22px; }
+    .lead-row { grid-template-columns: 1fr; gap: 0; }
+    .lead-form-intro { font-size: 0.92rem; margin-bottom: 18px; }
+}
+
 .modal-body a:visited {
     color: var(--btn-green) !important;
 }
@@ -628,7 +684,7 @@ body {
               <div class="stats-grid">
     <div class="stat-card">
         <div class="stat-value-container">
-            <span class="stat-number" data-target="70">0</span><span class="stat-suffix">M+</span>
+            <span class="stat-number" data-target="62">0</span><span class="stat-suffix">M+</span>
         </div>
         <span class="stat-desc" data-i18n="stats_views">Просмотров</span>
     </div>
@@ -702,6 +758,49 @@ body {
             "Настоящий успех бренда начинается там, где заканчивается боязнь выйти за рамки привычных соцсетей"
         </div>
         <h2 data-aos="zoom-in" data-i18n="nav_contact" style="margin-top: 30px; width: 100%;">Связаться</h2>
+
+        <form class="lead-form" id="leadForm" data-aos="fade-up" novalidate>
+            <p class="lead-form-intro" data-i18n="form_intro">Расскажите о задаче - отвечу в течение дня и предложу площадки под неё</p>
+
+            <div class="lead-row">
+                <label class="lead-field">
+                    <span data-i18n="form_name">Имя</span>
+                    <input type="text" name="name" maxlength="100" required autocomplete="name">
+                </label>
+                <label class="lead-field">
+                    <span data-i18n="form_contact">Telegram или почта</span>
+                    <input type="text" name="contact" maxlength="100" required autocomplete="email">
+                </label>
+            </div>
+
+            <div class="lead-row">
+                <label class="lead-field">
+                    <span data-i18n="form_company">Компания</span>
+                    <input type="text" name="company" maxlength="100" autocomplete="organization">
+                </label>
+                <label class="lead-field">
+                    <span data-i18n="form_budget">Примерный бюджет</span>
+                    <input type="text" name="budget" maxlength="100">
+                </label>
+            </div>
+
+            <label class="lead-field">
+                <span data-i18n="form_product">Что продвигаем</span>
+                <input type="text" name="product" maxlength="300" required>
+            </label>
+
+            <label class="lead-field">
+                <span data-i18n="form_brief">ТЗ, если есть</span>
+                <textarea name="brief" rows="3" maxlength="2000"></textarea>
+            </label>
+
+            <!-- Ловушка для спам-ботов: человек его не видит, бот заполняет -->
+            <input type="text" name="website" class="lead-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+            <button type="submit" class="btn lead-submit" data-i18n="form_submit">Отправить заявку</button>
+            <p class="lead-status" id="leadStatus" role="status" aria-live="polite"></p>
+        </form>
+
         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; width: 100%;">
             <a href="https://t.me/Ki1aragg" target="_blank" class="btn" style="background: #24A1DE; color: white;">Telegram</a>
             <a href="https://vk.com/kiiarabg" target="_blank" class="btn" style="background: #0077FF; color: white;">VK</a>
@@ -743,6 +842,13 @@ body {
                 m_title: "Тематики", m_text: "iGaming, шутеры, MMORPG, мобайл, киберспортивные турниры и офлайн-мероприятия",
                 quote: "Настоящий успех бренда начинается там, где заканчивается боязнь выйти за рамки привычных соцсетей",
                 desc: "Описание:", tasks: "Что сделано:", results: "Результат:",
+                form_intro: "Расскажите о задаче - отвечу в течение дня и предложу площадки под неё",
+                form_name: "Имя", form_contact: "Telegram или почта", form_company: "Компания",
+                form_budget: "Примерный бюджет", form_product: "Что продвигаем", form_brief: "ТЗ, если есть",
+                form_submit: "Отправить заявку", form_sending: "Отправляю...",
+                form_ok: "Заявка отправлена. Свяжусь с вами в ближайшее время",
+                form_err: "Не получилось отправить. Напишите в Telegram",
+                form_required: "Заполните имя, контакт и что продвигаем",
                 btn_prev: "← Назад", btn_next: "Вперед →",
                 tag_Tournament: "Турнир", tag_Games: "Игры", tag_Special_Project: "Спецпроект", tag_Esports: "Киберспорт", tag_AI_Tech: "AI Технологии", tag_Shooter: "Шутер", tag_Action: "Экшен", tag_Mobile: "Мобайл", tag_MMORPG: "MMORPG", tag_Show: "Шоу", tag_EdTech: "EdTech", tag_Service: "Сервис", tag_PC: "PC"
             },
@@ -758,6 +864,13 @@ body {
                 m_title: "Verticals", m_text: "iGaming, shooters, MMORPG, mobile, esports tournaments and offline events",
                 quote: "True brand success begins where the fear of going beyond traditional social media ends",
                 desc: "Description:", tasks: "What was done:", results: "Result:",
+                form_intro: "Tell me about your campaign - I reply within a day with a list of channels",
+                form_name: "Name", form_contact: "Telegram or email", form_company: "Company",
+                form_budget: "Approximate budget", form_product: "What are we promoting", form_brief: "Brief, if you have one",
+                form_submit: "Send request", form_sending: "Sending...",
+                form_ok: "Request sent. I will get back to you shortly",
+                form_err: "Could not send. Please write me on Telegram",
+                form_required: "Please fill in name, contact and what we promote",
                 btn_prev: "← Previous", btn_next: "Next →",
                 tag_Tournament: "Tournament", tag_Games: "Games", tag_Special_Project: "Special Project", tag_Esports: "Esports", tag_AI_Tech: "AI Tech", tag_Shooter: "Shooter", tag_Action: "Action", tag_Mobile: "Mobile", tag_MMORPG: "MMORPG", tag_Show: "Show", tag_EdTech: "EdTech", tag_Service: "Service", tag_PC: "PC"
             },
@@ -773,6 +886,13 @@ body {
                 m_title: "覆盖领域", m_text: "iGaming、射击、MMORPG、手游、电竞赛事及线下活动",
                 quote: "品牌的真正成功始于打破对传统社交媒体的依赖",
                 desc: "描述:", tasks: "执行内容:", results: "结果:",
+                form_intro: "请介绍您的需求，我会在一天内回复并推荐合适的主播",
+                form_name: "姓名", form_contact: "Telegram 或邮箱", form_company: "公司",
+                form_budget: "预算范围", form_product: "推广内容", form_brief: "需求说明（如有）",
+                form_submit: "提交需求", form_sending: "提交中...",
+                form_ok: "已提交，我会尽快与您联系",
+                form_err: "提交失败，请通过 Telegram 联系我",
+                form_required: "请填写姓名、联系方式和推广内容",
                 btn_prev: "← 返回", btn_next: "下一个 →",
                 tag_Tournament: "锦标赛", tag_Games: "游戏", tag_Special_Project: "特别项目", tag_Esports: "电竞", tag_AI_Tech: "人工智能技术", tag_Shooter: "射击游戏", tag_Action: "动作游戏", tag_Mobile: "手游", tag_MMORPG: "多人在线角色扮演游戏", tag_Show: "综艺节目", tag_EdTech: "教育技术", tag_Service: "服务", tag_PC: "个人电脑"
             }
@@ -818,7 +938,7 @@ body {
             { img: "photo_2025-12-14_01-22-28.webp", tag: "Tournament", title: {ru:"СберСеллер и SMP",en:"SberSeller & SMP",zh:"SberSeller & SMP"}, mini:{ru:"371к+ просмотров",en:"371k+ views",zh:"37.1万+ 观看次数"}, task:{ru:"Популяризация кибер- и фиджитал-дисциплин в регионе. Рост вовлеченности в ключевых дисциплинах: CS2 и Dota 2. Привлечение целевой аудитории. KPI — минимум 3 тыс. посетителей",en:"Popularizing cyber and phygital disciplines in the region. Increasing engagement in key disciplines: CS2 and Dota 2. Attracting target audience. KPI - minimum 3,000 visitors",zh:"在当地推广电竞与数实融合项目。提升CS2和Dota 2等核心项目的参与度。吸引目标受众。KPI目标：至少3000名到场观众"}, doing:{ru:["Организация присутствия инфлюенсеров","Координация трансляций фестиваля"],en:["Organizing influencer attendance","Coordinating festival broadcasts"],zh:["组织博主出席","协调节日直播"]}, result:{ru:["Фестиваль посетили около 3,2 тыс. человек","Трансляции с участием mixazver собрали более 371 тыс. просмотров","Выросло количество участников турниров по CS2 и Dota 2"],en:["About 3,200 people visited the festival","Broadcasts featuring mixazver gathered more than 371,000 views","The number of participants in CS2 and Dota 2 tournaments has grown"],zh:["约 3200 人参加了节日","由 mixazver 参与 Graves的直播获得了超过 37.1 万次观看","CS2 和 Dota 2 锦标赛的参与人数有所增加"]} },
             { img: "photo_2024-12-20_19-14-28.webp", tag: "Special Project", title: {ru:"Гигачат",en:"GigaChat",zh:"GigaChat"}, mini:{ru:"1,9 млн+ просмотров",en:"1.9M+ views",zh:"190万+ 观看次数"}, task:{ru:"Задача 1: Рассказывать на стримах про приложение GIGA, призывать аудиторию создавать персонажей и добавлять их в виртуальный город в приложении Telegram. Задача 2: Проведение спецстрима с нейросетью GigaChat",en:"Task 1: Tell the audience about the GIGA application during streams, calling on them to create characters and add them to a virtual city in the Telegram app. Task 2: Conducting a special stream with the GigaChat neural network",zh:"任务一：在直播中介绍GIGA应用，号召观众创建角色并将其添加到Telegram中的虚拟城市。任务二：举办GigaChat人工智能专题直播"}, doing:{ru:["Интеграция механики: зрители присылали открытки в телеграм-бота, созданные в нейросети GigaChat","Каждые 5-10 минут одна открытка выбиралась случайным образом и автоматически распечатывалась на принтере у стримера во время трансляции"],en:["Integration of mechanics: viewers sent postcards to a Telegram bot, created in the GigaChat neural network","Every 5-10 minutes, one postcard was randomly selected and automatically printed on a printer at the streamer's location during the broadcast"],zh:["机制整合：观众将 GigaChat 神经网络生成的明信片发送至 Telegram 机器人","每 5-10 分钟随机抽取一张明信片，并在直播期间由主播处的打印机自动打印"]}, result:{ru:["Проведены интерактивные стримы с участием стримера и чата","На рандомайзер поступило более 80 открыток, распечатано более 30","Более 1,9 млн. просмотров рекламной кампании на канале soonvooshko","Более 350 участников чата вовлечено в Страну Стримеров"],en:["Interactive streams were held with the participation of the streamer and the chat","More than 80 cards were submitted to the randomizer, and more than 30 were printed","More than 1.9 million views of the advertising campaign on the soonvooshko channel","More than 350 chat participants were involved in the Streamers' Country"],zh:["举办了主播与聊天室互动的直播","随机抽取系统收到超过 80 张明信片，打印超过 30 张","soonvooshko 频道的广告活动观看次数超过 190 万","超过 350 名观众参与了“主播之国”活动"]} },
             { img: "img9.webp", tag: "Games", title: {ru:"Arena Breakout",en:"Arena Breakout",zh:"Arena Breakout"}, mini:{ru:"20 млн+ просмотров",en:"20M+ views",zh:"2000万+ 观看次数"}, task:{ru:"Демонстрация запуска нового шутера. Популяризация игры среди комьюнити. Участие во внутриигровых турнирах. Участие в реферальной программе пополнения баланса Buff-Buff",en:"Demonstration of the launch of a new shooter. Popularizing the game among the community. Participation in in-game tournaments. Participation in the Buff-Buff balance top-up referral program",zh:"展示新射击游戏的上线。在社区中推广游戏。参与游戏内赛事。参与Buff-Buff充值推荐计划"}, doing:{ru:["Организация стримов на запуске","Контроль KPI по просмотрам и рефералам"],en:["Organizing streams at launch","Controlling KPIs for views and referrals"],zh:["组织首发直播","监控观看量和推荐注册的 KPI"]}, result:{ru:["Почти 13 млн. просмотров трансляции soonvooshko","Более 7 млн. просмотров трансляции mixazver"],en:["Nearly 13 million views on the soonvooshko broadcast","More than 7 million views on the mixazver broadcast"],zh:["soonvooshko 的直播观看次数近 1300 万","mixazver 的直播观看次数超过 700 万"]} },
-            { img: "photo_2024-10-18_20-08-15.webp", tag: "Games", title: {ru:"Zenless Zone Zero",en:"Zenless Zone Zero",zh:"Zenless Zone Zero"}, mini:{ru:"Top Nimo.tv",en:"Top Nimo.tv",zh:"Nimo.tv 热榜"}, task:{ru:"Проведение спецстрима. Прохождение челленджа внутри игры с другими стримерами",en:"Conducting a special stream. Passing a challenge inside the game with other streamers",zh:"举办专题直播。与其他主播一起完成游戏内挑战"}, doing:{ru:["Координация стримов: soonvooshko, chopo_kaify, didishkatv, dinicetea, tennkamlg, pudgaero, jenova"],en:["Coordination of streams: soonvooshko, chopo_kaify, didishkatv, dinicetea, tennkamlg, pudgaero, jenova"],zh:["主播协调：soonvooshko, chopo_kaify, didishkatv, dinicetea, tennkamlg, pudgaero, jenova"]}, result:{ru:["Более 60к просмотров трансляции soonvooshko","Более 23к просмотров трансляции chopo_kaify","Более 22к просмотров трансляции didishkatv","Трансляция soonvooshko попала на главную Nimo.tv"],en:["More than 60k views on the soonvooshko stream","More than 23k views on the chopo_kaify stream","More than 22k views on the didishkatv stream","The soonvooshko broadcast hit the main Nimo.tv page"],zh:["soonvooshko 的直播观看次数超过 6 万","chopo_kaify 的直播观看次数超过 2.3 万","soonvooshko 的直播登上了 Nimo.tv 首页"]} },
+            { img: "photo_2024-10-18_20-08-15.webp", tag: "Games", title: {ru:"Zenless Zone Zero",en:"Zenless Zone Zero",zh:"Zenless Zone Zero"}, mini:{ru:"Top Nimo.tv",en:"Top Nimo.tv",zh:"Nimo.tv 热榜"}, sortWeight: 1500000, task:{ru:"Проведение спецстрима. Прохождение челленджа внутри игры с другими стримерами",en:"Conducting a special stream. Passing a challenge inside the game with other streamers",zh:"举办专题直播。与其他主播一起完成游戏内挑战"}, doing:{ru:["Координация стримов: soonvooshko, chopo_kaify, didishkatv, dinicetea, tennkamlg, pudgaero, jenova"],en:["Coordination of streams: soonvooshko, chopo_kaify, didishkatv, dinicetea, tennkamlg, pudgaero, jenova"],zh:["主播协调：soonvooshko, chopo_kaify, didishkatv, dinicetea, tennkamlg, pudgaero, jenova"]}, result:{ru:["Более 60к просмотров трансляции soonvooshko","Более 23к просмотров трансляции chopo_kaify","Более 22к просмотров трансляции didishkatv","Трансляция soonvooshko попала на главную Nimo.tv"],en:["More than 60k views on the soonvooshko stream","More than 23k views on the chopo_kaify stream","More than 22k views on the didishkatv stream","The soonvooshko broadcast hit the main Nimo.tv page"],zh:["soonvooshko 的直播观看次数超过 6 万","chopo_kaify 的直播观看次数超过 2.3 万","soonvooshko 的直播登上了 Nimo.tv 首页"]} },
             { img: "img11.webp", tag: "Games", title: {ru:"Total Football",en:"Total Football",zh:"Total Football"}, mini:{ru:"450к+ просмотров",en:"450k+ views",zh:"45万+ 观看次数"}, task:{ru:"Демонстрация выхода нового футбольного симулятора. Проведение спецстримов на каналах стримеров. Выпуск роликов на YT у профильных блогеров",en:"Demonstration of the release of a new football simulator. Conducting special streams on streamer channels. Releasing videos on YT with niche bloggers",zh:"展示新足球模拟游戏的发布。在主播频道举办专题直播。与垂直领域博主在YouTube发布视频"}, doing:{ru:["Координация стримов: telkastrimera, tpabomah, di_rubens, off_kuka358","Работа с блогерами: Shermans, abdujabborov_7, Babatumba"],en:["Coordination of streams: telkastrimera, tpabomah, di_rubens, off_kuka358","Working with bloggers: Shermans, abdujabborov_7, Babatumba"],zh:["主播协调：telkastrimera, tpabomah, di_rubens, off_kuka358","博主合作：Shermans, abdujabborov_7, Babatumba"]}, result:{ru:["Более 60к просмотров (telkastrimera и tpabomah)","Более 112 тыс. просмотров трансляций di_rubens и off_kuka358","Более 243 тыс. просмотров ролика блогера abdujabborov_7"],en:["More than 60k views (telkastrimera and tpabomah)","112k views (di_rubens and off_kuka358)","243k+ views of the video by blogger abdujabborov_7"],zh:["超过 6 万次观看 (telkastrimera 和 tpabomah)","11.2 万次观看 (di_rubens 和 off_kuka358)","abdujabborov_7 的视频观看量超过 24.3 万"]} },
             { img: "img12.webp", tag: "Games", title: {ru:"PUBG Mobile",en:"PUBG Mobile",zh:"PUBG Mobile"}, mini:{ru:"709к+ просмотров",en:"709k+ views",zh:"70.9万+ 观看次数"}, task:{ru:"Размещение нарезок на канале YT recrent по PUBGM. Популяризация игры",en:"Placing highlight reels on the recrent YT channel for PUBGM. Popularizing the game",zh:"在recrent的YouTube频道发布PUBGM精彩集锦。推广游戏"}, doing:{ru:["Размещение ролика 1 на канале recrent","Размещение ролика 2 на канале recrent"],en:["Placing video 1 on the recrent channel","Placing video 2 on the recrent channel"],zh:["在 recrent 频道投放视频 1","在 recrent 频道投放视频 2"]}, result:{ru:["Более 709 тыс. просмотров роликов на канале YT recrent"],en:["More than 709,000 views of videos on the recrent YT channel"],zh:["recrent 的 YT 频道视频观看次数超过 70.9 万"]} },
             { img: "img13.webp", tag: "Games", title: {ru:"ArcheAge",en:"ArcheAge",zh:"ArcheAge"}, mini:{ru:"60к+ просмотров",en:"60k+ views",zh:"6万+ 观看次数"}, task:{ru:"Демонстрация обновления игры ArcheAge",en:"Demonstration of the ArcheAge game update",zh:"展示ArcheAge游戏更新内容"}, doing:{ru:["Показ обновления (класс Феи)","Призыв забирать подарки","Стрим soonvooshko"],en:["Showcasing the update (Fairy class)","Call to action to collect gifts","soonvooshko stream"],zh:["展示版本更新（精灵职业）","号召领取礼包","soonvooshko 直播"]}, result:{ru:["Более 60 тыс. просмотров трансляции soonvooshko"],en:["More than 60,000 views of the soonvooshko broadcast"],zh:["soonvooshko 的直播观看次数超过 6 万"]} },
@@ -878,12 +998,50 @@ body {
         }
 
         const container = document.getElementById('cases-container');
+        // Достаём число просмотров из строки вида "23,5 млн+ просмотров" или "371к+"
+        // и переводим в единое число, чтобы сортировать кейсы по убыванию
+        function viewsOf(c) {
+            const s = (c.mini && c.mini.ru) ? c.mini.ru : '';
+            // У кейсов без цифры в плашке (например "Top Nimo.tv") веса нет,
+            // но по значимости они идут сразу после миллионников
+            if (c.sortWeight) return c.sortWeight;
+            const m = s.match(/([\d]+(?:[.,]\d+)?)\s*(млн|к)?/i);
+            if (!m) return 0;
+            const num = parseFloat(m[1].replace(',', '.'));
+            if (isNaN(num)) return 0;
+            const unit = (m[2] || '').toLowerCase();
+            if (unit === 'млн') return num * 1000000;
+            if (unit === 'к') return num * 1000;
+            return num;
+        }
+
+        // Короткий якорь для адреса страницы: "NTE" -> "nte", "Игры Будущего" -> "igry-budushchego"
+        function slugOf(c, index) {
+            const translit = { 'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e','ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'h','ц':'c','ч':'ch','ш':'sh','щ':'sch','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya' };
+            const base = (c.title && c.title.ru ? c.title.ru : 'case').toLowerCase();
+            let out = '';
+            for (const ch of base) {
+                if (translit[ch] !== undefined) out += translit[ch];
+                else if (/[a-z0-9]/.test(ch)) out += ch;
+                else out += '-';
+            }
+            out = out.replace(/-+/g, '-').replace(/^-|-$/g, '');
+            // У NTE три кейса и у ZZZ два - добавляем номер, чтобы ссылки не совпадали
+            const sameName = allCases.filter(x => x.title.ru === c.title.ru);
+            if (sameName.length > 1) out += '-' + (sameName.indexOf(c) + 1);
+            return out || ('case-' + index);
+        }
+
         function renderCases(filter = 'all') {
     container.innerHTML = '';
     activeFilter = filter;
-    
-    const filteredCases = allCases.filter(c => filter === 'all' || c.tag === filter);
-    
+
+    // Сортируем по убыванию просмотров: самые крупные кейсы сверху
+    const filteredCases = allCases
+        .filter(c => filter === 'all' || c.tag === filter)
+        .slice()
+        .sort((a, b) => viewsOf(b) - viewsOf(a));
+
     filteredCases.forEach((c, index) => {
         const tagKey = `tag_${c.tag.replace(/ /g, '_')}`;
         const translatedTag = i18n[currentLang][tagKey] || c.tag;
@@ -893,6 +1051,7 @@ body {
         card.setAttribute('data-aos', 'zoom-in');
         
         const originalIndex = allCases.indexOf(c);
+        card.id = 'case-' + slugOf(c, originalIndex);
         card.onclick = () => openModal(originalIndex);
 
         // --- ВОТ ТУТ ПРАВКА ДЛЯ КАРТИНКИ В СЕТКЕ ---
@@ -942,6 +1101,12 @@ body {
     const modal = document.getElementById('projectModal');
     modal.style.display = 'flex'; // Показываем
     document.body.style.overflow = 'hidden';
+
+    // Пишем якорь в адрес - ссылку на конкретный кейс можно скопировать и отправить
+    try {
+        const slug = 'case-' + slugOf(c, index);
+        history.replaceState(null, '', '#' + slug);
+    } catch (e) { /* в некоторых браузерах history может быть недоступна */ }
 }
         function nextCase() {
             currentModalIndex = (currentModalIndex + 1) % allCases.length;
@@ -957,6 +1122,75 @@ body {
     const modal = document.getElementById('projectModal');
     modal.style.display = 'none'; // Скрываем полностью
     document.body.style.overflow = 'auto';
+
+    // Убираем якорь кейса из адреса
+    try {
+        if (location.hash.startsWith('#case-')) {
+            history.replaceState(null, '', location.pathname + location.search);
+        }
+    } catch (e) { /* history может быть недоступна */ }
+}
+
+// Отправка формы заявки. Токен бота живёт на сервере, здесь только адрес сервиса
+function initLeadForm() {
+    const form = document.getElementById('leadForm');
+    const status = document.getElementById('leadStatus');
+    if (!form || !status) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const t = (key) => (i18n[currentLang] && i18n[currentLang][key]) || i18n.ru[key] || '';
+        const btn = form.querySelector('.lead-submit');
+        const data = Object.fromEntries(new FormData(form).entries());
+
+        // Проверяем обязательный минимум до отправки
+        if (!String(data.name || '').trim() || !String(data.contact || '').trim() || !String(data.product || '').trim()) {
+            status.textContent = t('form_required');
+            status.className = 'lead-status err';
+            return;
+        }
+
+        btn.disabled = true;
+        status.textContent = t('form_sending');
+        status.className = 'lead-status';
+
+        try {
+            const res = await fetch('/api/lead', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const json = await res.json().catch(() => ({}));
+
+            if (res.ok && json.ok) {
+                status.textContent = t('form_ok');
+                status.className = 'lead-status ok';
+                form.reset();
+            } else {
+                status.textContent = json.error || t('form_err');
+                status.className = 'lead-status err';
+            }
+        } catch (err) {
+            console.error('Отправка заявки не удалась:', err);
+            status.textContent = t('form_err');
+            status.className = 'lead-status err';
+        } finally {
+            btn.disabled = false;
+        }
+    });
+}
+
+// Открываем кейс сразу, если страницу открыли по прямой ссылке на него
+function openCaseFromHash() {
+    const hash = location.hash;
+    if (!hash || !hash.startsWith('#case-')) return;
+    const slug = hash.slice(6);
+    const idx = allCases.findIndex((c, i) => slugOf(c, i) === slug);
+    if (idx === -1) return;
+    const card = document.getElementById('case-' + slug);
+    if (card) card.scrollIntoView({ block: 'center' });
+    openModal(idx);
 }
 
         // Управление модалкой с клавиатуры: Esc закрывает, стрелки листают кейсы
@@ -1186,6 +1420,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         try { initBg(); } catch (e) { console.error(e); }
     }, 150);
+
+    // 5. Если пришли по прямой ссылке на кейс - открываем его
+    setTimeout(() => {
+        try { openCaseFromHash(); } catch (e) { console.error(e); }
+    }, 200);
+
+    // 6. Форма заявки
+    try { initLeadForm(); } catch (e) { console.error('initLeadForm failed:', e); }
 });
 
 window.addEventListener('resize', initBg);
