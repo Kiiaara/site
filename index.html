@@ -285,14 +285,15 @@ body {
                    жёсткое число разъезжалось, когда хедер менял высоту */
                 top: var(--header-h, 88px) !important; padding: 8px 10px;
                 background: rgba(2, 13, 6, 0.4) !important;
-                flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;
-                gap: 8px; margin-bottom: 18px;
-                -webkit-overflow-scrolling: touch; scrollbar-width: none;
+                flex-wrap: nowrap; overflow-x: visible; justify-content: stretch;
+                gap: 5px; margin-bottom: 18px;
             }
-            .filter-container::-webkit-scrollbar { display: none; }
             .filter-btn {
-                padding: 7px 15px; font-size: 0.8rem; border-width: 1px;
-                white-space: nowrap; flex: 0 0 auto;
+                /* Кнопки делят ширину поровну и ужимаются под экран:
+                   4 штуки должны влезать без прокрутки даже на узких телефонах */
+                padding: 7px 4px; font-size: 0.72rem; border-width: 1px;
+                white-space: nowrap; flex: 1 1 0; min-width: 0;
+                letter-spacing: 0;
             }
             .filter-btn.active { box-shadow: 0 0 12px rgba(46, 204, 113, 0.35); }
 
