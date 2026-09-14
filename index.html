@@ -242,10 +242,20 @@ body {
         .case-result-mini { margin-top: auto; padding-top: 12px; font-weight: 800; color: var(--accent-light); font-size: 1rem; }
 
         @media (max-width: 900px) {
-            nav { flex-direction: column; gap: 8px; padding: 10px 20px; width: 100%; align-items: center; }
-            .nav-links { justify-content: center; width: 100%; gap: 15px; }
-            .lang-switch { margin-left: 0; margin-top: 5px; }
-            .hero { margin-top: 160px; width: 100%; align-items: center; text-align: center; }
+            /* Хедер в два этажа вместо трёх: логотип и языки в одну строку,
+               меню под ними. Раньше три ряда съедали треть экрана */
+            nav {
+                flex-direction: row; flex-wrap: wrap; gap: 6px 10px;
+                padding: 8px 14px; width: 100%; align-items: center;
+                justify-content: space-between;
+            }
+            .logo { order: 1; }
+            .lang-switch { order: 2; margin-left: 0; margin-top: 0; gap: 6px; }
+            .nav-links { order: 3; justify-content: center; width: 100%; gap: 18px; margin-top: 2px; }
+            .nav-links a { font-size: 0.85rem; }
+            .lang-btn { padding: 4px 9px; font-size: 0.7rem; border-radius: 5px; }
+
+            .hero { margin-top: 120px; width: 100%; align-items: center; text-align: center; }
             .section { padding: 40px 20px; width: 100%; align-items: center; text-align: center; }
             h2 { font-size: 2rem; text-align: center; }
             .about-layout { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 30px; }
@@ -267,8 +277,23 @@ body {
             .modal-body p, .modal-body li { font-size: 1rem; line-height: 1.65; }
             .modal-body li { padding-left: 18px; margin-bottom: 9px; }
 
-            .filter-container { top: 122px !important; padding: 10px; background: rgba(2, 13, 6, 0.4) !important; }
-            .logo { font-size: 1.2rem !important; letter-spacing: 1px; }
+            /* Фильтры в одну строку с прокруткой: раньше 4 кнопки
+               переносились на два ряда и занимали пол-экрана */
+            .filter-container {
+                top: 88px !important; padding: 8px 10px;
+                background: rgba(2, 13, 6, 0.4) !important;
+                flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;
+                gap: 8px; margin-bottom: 18px;
+                -webkit-overflow-scrolling: touch; scrollbar-width: none;
+            }
+            .filter-container::-webkit-scrollbar { display: none; }
+            .filter-btn {
+                padding: 7px 15px; font-size: 0.8rem; border-width: 1px;
+                white-space: nowrap; flex: 0 0 auto;
+            }
+            .filter-btn.active { box-shadow: 0 0 12px rgba(46, 204, 113, 0.35); }
+
+            .logo { font-size: 1.05rem !important; letter-spacing: 1px; }
             footer { padding: 15px 10px !important; }
         }
 
@@ -303,7 +328,21 @@ body {
         }
         .close-modal:hover { color: var(--btn-green); transform: scale(1.1); }
         .modal-nav-overlay { position: fixed; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 40px; pointer-events: none; z-index: 5100; width: 100%; }
-        .nav-btn { pointer-events: auto; background: rgba(7, 26, 15, 0.8); border: 1px solid var(--btn-green); color: var(--btn-green); width: 60px; height: 60px; border-radius: 50%; cursor: pointer; font-weight: 800; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .nav-btn {
+            pointer-events: auto;
+            /* Зеленоватая заливка вместо почти прозрачной - кружки видно на любом фоне */
+            background: rgba(46, 204, 113, 0.18);
+            border: 1px solid var(--btn-green); color: var(--btn-green);
+            width: 60px; height: 60px; border-radius: 50%; cursor: pointer;
+            font-weight: 800; font-size: 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+            /* Символы ‹ › у большинства шрифтов сидят выше базовой линии,
+               из-за чего казались смещёнными вниз в кружке */
+            line-height: 1; padding: 0 0 4px 0;
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            transition: 0.3s;
+        }
+        .nav-btn:hover { background: rgba(46, 204, 113, 0.32); }
         .modal-main-img {
             width: 100%;
             /* Жёсткая пропорция 16:9: у картинок кейсов она гуляет от 1.37 до 2.1,
@@ -373,7 +412,7 @@ body {
     font-weight: 700; 
     padding: 40px 60px; 
     text-align: center; 
-    background: rgba(0, 0, 0, 0.85) !important;
+    background: rgba(9, 32, 19, 0.82) !important;
     backdrop-filter: blur(2px) !important;
     -webkit-backdrop-filter: blur(2px) !important;
     border-radius: 30px; 
@@ -395,6 +434,31 @@ body {
         inset 0 0 20px 2px rgba(255, 255, 255, 0.1),      /* Внутренний блик */
         0 0 15px 8px rgba(46, 204, 113, 0.2),            /* Густое зеленое облако Таро */
         0 0 25px 15px rgba(46, 204, 113, 0.2);            /* Огромное мягкое рассеивание */
+
+    /* Живая пульсация свечения вместо статичной подсветки */
+    animation: quote-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes quote-pulse {
+    0%, 100% {
+        box-shadow:
+            0 0 8px 3px rgba(255, 255, 255, 0.2),
+            inset 0 0 20px 2px rgba(255, 255, 255, 0.1),
+            0 0 15px 8px rgba(46, 204, 113, 0.2),
+            0 0 25px 15px rgba(46, 204, 113, 0.2);
+    }
+    50% {
+        box-shadow:
+            0 0 14px 5px rgba(255, 255, 255, 0.3),
+            inset 0 0 26px 4px rgba(255, 255, 255, 0.16),
+            0 0 26px 14px rgba(46, 204, 113, 0.45),
+            0 0 46px 26px rgba(46, 204, 113, 0.32);
+    }
+}
+
+/* Уважаем системную настройку "уменьшить движение" */
+@media (prefers-reduced-motion: reduce) {
+    .quote-box { animation: none; }
 }
 
 /* При наведении делаем эффект Таро еще мощнее */
@@ -403,7 +467,7 @@ body {
     box-shadow: 
         0 0 13px 5px rgba(255, 255, 255, 0.3), 
         inset 0 0 25px 4px rgba(255, 255, 255, 0.2), 
-        0 0 23px 12px rgba(46, 204, 113, 0,5), 
+        0 0 23px 12px rgba(46, 204, 113, 0.5),
         0 0 30px 20px rgba(46, 204, 113, 0.2);
 }
 
@@ -411,8 +475,9 @@ body {
 @media (max-width: 768px) {
     /* Стрелки листания на телефоне: базовые 60px налезали на заголовок.
        Отступ от краёв обязателен - у самой кромки iOS перехватывает
-       свайп «назад», и кнопка бы не нажималась */
-    .modal-nav-overlay { padding: 0 18px; }
+       свайп «назад», и кнопка бы не нажималась. 26px = 10px поле модалки
+       + 16px, чтобы кнопка не касалась её зелёной рамки */
+    .modal-nav-overlay { padding: 0 26px; }
     .nav-btn {
         width: 44px; height: 44px; font-size: 1.2rem;
         background: rgba(7, 26, 15, 0.65);
@@ -533,6 +598,7 @@ body {
                 <span class="brand-item">DXRACER</span><span class="brand-item">АЛАБУГА ПОЛИТЕХ</span><span class="brand-item">ДРОНКОН</span>
                 <span class="brand-item">ARCHEAGE</span><span class="brand-item">EXOBORNE</span><span class="brand-item">NTE</span>
                 <span class="brand-item">CRIMSON DESERT</span><span class="brand-item">SMP</span>
+                <span class="brand-item">BLUE PROTOCOL</span><span class="brand-item">ARENA BREAKOUT INFINITE</span>
             </div>
             <div class="brands-container">
                 <span class="brand-item">GIGACHAT</span><span class="brand-item">СБЕРСЕЛЛЕР и SMP</span><span class="brand-item">PUBG MOBILE</span>
@@ -543,6 +609,7 @@ body {
                 <span class="brand-item">DXRACER</span><span class="brand-item">АЛАБУГА ПОЛИТЕХ</span><span class="brand-item">ДРОНКОН</span>
                 <span class="brand-item">ARCHEAGE</span><span class="brand-item">EXOBORNE</span><span class="brand-item">NTE</span>
                 <span class="brand-item">CRIMSON DESERT</span><span class="brand-item">SMP</span>
+                <span class="brand-item">BLUE PROTOCOL</span><span class="brand-item">ARENA BREAKOUT INFINITE</span>
             </div>
         </div>
     </div>
