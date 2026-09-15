@@ -427,28 +427,6 @@ body {
 }
 .lead-field input:invalid:not(:placeholder-shown) { border-color: rgba(255, 107, 107, 0.5); }
 
-/* Поле выбора файла */
-.lead-file input[type="file"] {
-    padding: 10px 12px; cursor: pointer;
-    font-size: 0.9rem; color: var(--accent-light);
-}
-.lead-file input[type="file"]::file-selector-button {
-    margin-right: 12px; padding: 7px 14px;
-    background: rgba(46, 204, 113, 0.15);
-    border: 1px solid rgba(46, 204, 113, 0.4);
-    border-radius: 10px; color: var(--btn-green);
-    font-family: inherit; font-weight: 800; font-size: 0.82rem;
-    cursor: pointer; transition: 0.25s;
-}
-.lead-file input[type="file"]::file-selector-button:hover {
-    background: rgba(46, 204, 113, 0.28);
-}
-.lead-hint {
-    display: block; margin-top: 6px;
-    font-size: 0.78rem; color: rgba(255, 255, 255, 0.45);
-    text-transform: none; letter-spacing: 0;
-}
-
 /* Поле-ловушка: убрано с экрана, но доступно ботам */
 .lead-trap {
     position: absolute; left: -9999px; width: 1px; height: 1px;
@@ -826,12 +804,6 @@ body {
                 <textarea name="brief" rows="3" maxlength="2000"></textarea>
             </label>
 
-            <label class="lead-field lead-file">
-                <span data-i18n="form_file">Файл с ТЗ, если есть</span>
-                <input type="file" name="file" accept=".pdf,.docx,.xlsx,.pptx,.png,.jpg,.jpeg,.webp">
-                <small class="lead-hint" data-i18n="form_file_hint">PDF, DOCX, XLSX, PPTX, PNG, JPG - до 20 МБ</small>
-            </label>
-
             <!-- Ловушка для спам-ботов: человек его не видит, бот заполняет -->
             <input type="text" name="website" class="lead-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
 
@@ -883,8 +855,6 @@ body {
                 form_intro: "Расскажите о задаче - отвечу в течение дня и предложу площадки под неё",
                 form_name: "Имя", form_contact: "Telegram или почта", form_company: "Компания",
                 form_budget: "Примерный бюджет", form_product: "Что продвигаем", form_brief: "ТЗ, если есть",
-                form_file: "Файл с ТЗ, если есть", form_file_hint: "PDF, DOCX, XLSX, PPTX, PNG, JPG - до 20 МБ",
-                form_file_big: "Файл больше 20 МБ. Пришлите ссылку на облако",
                 form_submit: "Отправить заявку", form_sending: "Отправляю...",
                 form_ok: "Заявка отправлена. Свяжусь с вами в ближайшее время",
                 form_err: "Не получилось отправить. Напишите в Telegram",
@@ -907,8 +877,6 @@ body {
                 form_intro: "Tell me about your campaign - I reply within a day with a list of channels",
                 form_name: "Name", form_contact: "Telegram or email", form_company: "Company",
                 form_budget: "Approximate budget", form_product: "What are we promoting", form_brief: "Brief, if you have one",
-                form_file: "Brief as a file, if you have one", form_file_hint: "PDF, DOCX, XLSX, PPTX, PNG, JPG - up to 20 MB",
-                form_file_big: "File is over 20 MB. Please send a cloud link instead",
                 form_submit: "Send request", form_sending: "Sending...",
                 form_ok: "Request sent. I will get back to you shortly",
                 form_err: "Could not send. Please write me on Telegram",
@@ -931,8 +899,6 @@ body {
                 form_intro: "请介绍您的需求，我会在一天内回复并推荐合适的主播",
                 form_name: "姓名", form_contact: "Telegram 或邮箱", form_company: "公司",
                 form_budget: "预算范围", form_product: "推广内容", form_brief: "需求说明（如有）",
-                form_file: "需求文件（如有）", form_file_hint: "PDF、DOCX、XLSX、PPTX、PNG、JPG，不超过 20 MB",
-                form_file_big: "文件超过 20 MB，请改发云盘链接",
                 form_submit: "提交需求", form_sending: "提交中...",
                 form_ok: "已提交，我会尽快与您联系",
                 form_err: "提交失败，请通过 Telegram 联系我",
@@ -1196,25 +1162,19 @@ function initLeadForm() {
             return;
         }
 
-        // Файл больше 20 МБ не примет ни сервер, ни Telegram
-        const file = fd.get('file');
-        if (file && file.size > 20 * 1024 * 1024) {
-            status.textContent = t('form_file_big');
-            status.className = 'lead-status err';
-            return;
-        }
-        if (file && !file.size) fd.delete('file'); // пустое поле не шлём
-
         btn.disabled = true;
         status.textContent = t('form_sending');
         status.className = 'lead-status';
 
         try {
-            // FormData отправляем как есть: браузер сам проставит
-            // Content-Type с разделителем, вручную его задавать нельзя
+            // Сервис принимает JSON
+            const payload = {};
+            fd.forEach((v, k) => { payload[k] = String(v); });
+
             const res = await fetch('/api/lead', {
                 method: 'POST',
-                body: fd
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
             });
             const json = await res.json().catch(() => ({}));
 
