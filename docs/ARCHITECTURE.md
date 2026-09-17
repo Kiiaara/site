@@ -242,7 +242,6 @@ To add analytics:
 ## 📈 Future Enhancements
 
 - [ ] Dark/light mode toggle
-- [ ] Multi-language support (EN/RU)
 - [ ] Blog section with markdown
 - [ ] Contact form with email
 - [ ] PDF resume download
