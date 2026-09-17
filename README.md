@@ -1,6 +1,6 @@
 # 🎨 Kiiaara Portfolio Website
 
-Портфолио Ткачевой Валерии - Influence Marketing Manager. Кейсы со стримерами и блогерами в iGaming и Tech.
+Портфолио - Influence Marketing Manager. Кейсы со стримерами и блогерами в iGaming и Tech.
 
 **Stack:** HTML5 + CSS3 + Vanilla JavaScript + AOS animations
 
@@ -13,7 +13,7 @@
 Одностраничный лендинг-портфолио:
 
 - ✅ Кейсы и проекты со стримерами/блогерами (25+ кейсов, iGaming & Tech)
-- ✅ Переключатель языков (RU/EN)
+- ✅ Переключатель языков (RU/EN/ZN)
 - ✅ Плавные анимации при скролле (AOS library)
 - ✅ Соцсети и контакты
 - ✅ Мобильная адаптация
