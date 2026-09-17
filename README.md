@@ -4,7 +4,7 @@ Personal portfolio website showcasing gaming, streaming, and automation projects
 
 **Stack:** HTML5 + CSS3 + Vanilla JavaScript + AOS animations
 
-**🌐 Live Demo:** https://tkacheva-media.ru/
+**🌐 Live Site:** https://tkacheva-media.ru/
 
 ---
 
