@@ -385,71 +385,6 @@ body {
 }
 
 /* Убираем стандартный синий для посещенных ссылок */
-/* ---- Форма заявки ---- */
-.lead-form {
-    width: 100%; max-width: 760px; margin: 10px auto 40px auto;
-    background: var(--bg-card); padding: 30px;
-    border-radius: 28px; border: 1px solid rgba(181, 242, 161, 0.12);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    text-align: left;
-}
-.lead-form-intro {
-    color: var(--accent-light); font-size: 1rem;
-    margin-bottom: 22px; text-align: center; line-height: 1.5;
-}
-.lead-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.lead-field { display: block; margin-bottom: 14px; }
-/* Подпись поля занимала всю строку, и звёздочка переносилась вниз.
-   Теперь подпись строчная, а перенос делает сам input (он блочный) */
-.lead-field span {
-    display: inline; margin-bottom: 6px;
-    font-size: 0.82rem; font-weight: 800; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--accent-light);
-}
-.lead-field input, .lead-field textarea { margin-top: 6px; }
-.lead-field input, .lead-field textarea {
-    width: 100%; padding: 12px 14px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(181, 242, 161, 0.18);
-    border-radius: 14px; color: #fff;
-    font-family: inherit; font-size: 1rem;
-    transition: 0.25s; resize: vertical;
-}
-.lead-field input:focus, .lead-field textarea:focus {
-    outline: none; border-color: var(--btn-green);
-    background: rgba(46, 204, 113, 0.07);
-    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.12);
-}
-/* Звёздочка у обязательных полей */
-.lead-req {
-    display: inline; color: var(--btn-green);
-    margin-left: 4px; font-weight: 900;
-}
-.lead-field input:invalid:not(:placeholder-shown) { border-color: rgba(255, 107, 107, 0.5); }
-
-/* Поле-ловушка: убрано с экрана, но доступно ботам */
-.lead-trap {
-    position: absolute; left: -9999px; width: 1px; height: 1px;
-    opacity: 0; pointer-events: none;
-}
-.lead-submit {
-    width: 100%; margin-top: 8px; padding: 16px 30px;
-    font-size: 1rem;
-}
-.lead-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-.lead-status {
-    margin-top: 14px; text-align: center; min-height: 22px;
-    font-weight: 700; font-size: 0.95rem;
-}
-.lead-status.ok { color: var(--btn-green); }
-.lead-status.err { color: #ff6b6b; }
-
-/* На телефоне поля в одну колонку - в две они слишком узкие */
-@media (max-width: 700px) {
-    .lead-form { padding: 20px 16px; border-radius: 22px; }
-    .lead-row { grid-template-columns: 1fr; gap: 0; }
-    .lead-form-intro { font-size: 0.92rem; margin-bottom: 18px; }
-}
 
 .modal-body a:visited {
     color: var(--btn-green) !important;
@@ -769,48 +704,6 @@ body {
         </div>
         <h2 data-aos="zoom-in" data-i18n="nav_contact" style="margin-top: 30px; width: 100%;">Связаться</h2>
 
-        <form class="lead-form" id="leadForm" data-aos="fade-up" novalidate>
-            <p class="lead-form-intro" data-i18n="form_intro">Расскажите о задаче - отвечу в течение дня и предложу площадки под неё</p>
-
-            <div class="lead-row">
-                <label class="lead-field">
-                    <span data-i18n="form_name">Имя</span><span class="lead-req">*</span>
-                    <input type="text" name="name" maxlength="100" required autocomplete="name">
-                </label>
-                <label class="lead-field">
-                    <span data-i18n="form_contact">Telegram или почта</span><span class="lead-req">*</span>
-                    <input type="text" name="contact" maxlength="100" required autocomplete="email">
-                </label>
-            </div>
-
-            <div class="lead-row">
-                <label class="lead-field">
-                    <span data-i18n="form_company">Компания</span>
-                    <input type="text" name="company" maxlength="100" autocomplete="organization">
-                </label>
-                <label class="lead-field">
-                    <span data-i18n="form_budget">Примерный бюджет</span>
-                    <input type="text" name="budget" maxlength="100">
-                </label>
-            </div>
-
-            <label class="lead-field">
-                <span data-i18n="form_product">Что продвигаем</span><span class="lead-req">*</span>
-                <input type="text" name="product" maxlength="300" required>
-            </label>
-
-            <label class="lead-field">
-                <span data-i18n="form_brief">ТЗ, если есть</span>
-                <textarea name="brief" rows="3" maxlength="2000"></textarea>
-            </label>
-
-            <!-- Ловушка для спам-ботов: человек его не видит, бот заполняет -->
-            <input type="text" name="website" class="lead-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-            <button type="submit" class="btn lead-submit" data-i18n="form_submit">Отправить заявку</button>
-            <p class="lead-status" id="leadStatus" role="status" aria-live="polite"></p>
-        </form>
-
         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; width: 100%;">
             <a href="https://t.me/Ki1aragg" target="_blank" class="btn" style="background: #24A1DE; color: white;">Telegram</a>
             <a href="https://vk.com/kiiarabg" target="_blank" class="btn" style="background: #0077FF; color: white;">VK</a>
@@ -852,13 +745,6 @@ body {
                 m_title: "Тематики", m_text: "iGaming, шутеры, MMORPG, мобайл, киберспортивные турниры и офлайн-мероприятия",
                 quote: "Настоящий успех бренда начинается там, где заканчивается боязнь выйти за рамки привычных соцсетей",
                 desc: "Описание:", tasks: "Что сделано:", results: "Результат:",
-                form_intro: "Расскажите о задаче - отвечу в течение дня и предложу площадки под неё",
-                form_name: "Имя", form_contact: "Telegram или почта", form_company: "Компания",
-                form_budget: "Примерный бюджет", form_product: "Что продвигаем", form_brief: "ТЗ, если есть",
-                form_submit: "Отправить заявку", form_sending: "Отправляю...",
-                form_ok: "Заявка отправлена. Свяжусь с вами в ближайшее время",
-                form_err: "Не получилось отправить. Напишите в Telegram",
-                form_required: "Заполните имя, контакт и что продвигаем",
                 btn_prev: "← Назад", btn_next: "Вперед →",
                 tag_Tournament: "Турнир", tag_Games: "Игры", tag_Special_Project: "Спецпроект", tag_Esports: "Киберспорт", tag_AI_Tech: "AI Технологии", tag_Shooter: "Шутер", tag_Action: "Экшен", tag_Mobile: "Мобайл", tag_MMORPG: "MMORPG", tag_Show: "Шоу", tag_EdTech: "EdTech", tag_Service: "Сервис", tag_PC: "PC"
             },
@@ -874,13 +760,6 @@ body {
                 m_title: "Verticals", m_text: "iGaming, shooters, MMORPG, mobile, esports tournaments and offline events",
                 quote: "True brand success begins where the fear of going beyond traditional social media ends",
                 desc: "Description:", tasks: "What was done:", results: "Result:",
-                form_intro: "Tell me about your campaign - I reply within a day with a list of channels",
-                form_name: "Name", form_contact: "Telegram or email", form_company: "Company",
-                form_budget: "Approximate budget", form_product: "What are we promoting", form_brief: "Brief, if you have one",
-                form_submit: "Send request", form_sending: "Sending...",
-                form_ok: "Request sent. I will get back to you shortly",
-                form_err: "Could not send. Please write me on Telegram",
-                form_required: "Please fill in name, contact and what we promote",
                 btn_prev: "← Previous", btn_next: "Next →",
                 tag_Tournament: "Tournament", tag_Games: "Games", tag_Special_Project: "Special Project", tag_Esports: "Esports", tag_AI_Tech: "AI Tech", tag_Shooter: "Shooter", tag_Action: "Action", tag_Mobile: "Mobile", tag_MMORPG: "MMORPG", tag_Show: "Show", tag_EdTech: "EdTech", tag_Service: "Service", tag_PC: "PC"
             },
@@ -896,13 +775,6 @@ body {
                 m_title: "覆盖领域", m_text: "iGaming、射击、MMORPG、手游、电竞赛事及线下活动",
                 quote: "品牌的真正成功始于打破对传统社交媒体的依赖",
                 desc: "描述:", tasks: "执行内容:", results: "结果:",
-                form_intro: "请介绍您的需求，我会在一天内回复并推荐合适的主播",
-                form_name: "姓名", form_contact: "Telegram 或邮箱", form_company: "公司",
-                form_budget: "预算范围", form_product: "推广内容", form_brief: "需求说明（如有）",
-                form_submit: "提交需求", form_sending: "提交中...",
-                form_ok: "已提交，我会尽快与您联系",
-                form_err: "提交失败，请通过 Telegram 联系我",
-                form_required: "请填写姓名、联系方式和推广内容",
                 btn_prev: "← 返回", btn_next: "下一个 →",
                 tag_Tournament: "锦标赛", tag_Games: "游戏", tag_Special_Project: "特别项目", tag_Esports: "电竞", tag_AI_Tech: "人工智能技术", tag_Shooter: "射击游戏", tag_Action: "动作游戏", tag_Mobile: "手游", tag_MMORPG: "多人在线角色扮演游戏", tag_Show: "综艺节目", tag_EdTech: "教育技术", tag_Service: "服务", tag_PC: "个人电脑"
             }
@@ -1142,59 +1014,6 @@ body {
 }
 
 // Отправка формы заявки. Токен бота живёт на сервере, здесь только адрес сервиса
-function initLeadForm() {
-    const form = document.getElementById('leadForm');
-    const status = document.getElementById('leadStatus');
-    if (!form || !status) return;
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const t = (key) => (i18n[currentLang] && i18n[currentLang][key]) || i18n.ru[key] || '';
-        const btn = form.querySelector('.lead-submit');
-        const fd = new FormData(form);
-
-        // Проверяем обязательный минимум до отправки
-        const req = ['name', 'contact', 'product'];
-        if (req.some(k => !String(fd.get(k) || '').trim())) {
-            status.textContent = t('form_required');
-            status.className = 'lead-status err';
-            return;
-        }
-
-        btn.disabled = true;
-        status.textContent = t('form_sending');
-        status.className = 'lead-status';
-
-        try {
-            // Сервис принимает JSON
-            const payload = {};
-            fd.forEach((v, k) => { payload[k] = String(v); });
-
-            const res = await fetch('/api/lead', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            const json = await res.json().catch(() => ({}));
-
-            if (res.ok && json.ok) {
-                status.textContent = t('form_ok');
-                status.className = 'lead-status ok';
-                form.reset();
-            } else {
-                status.textContent = json.error || t('form_err');
-                status.className = 'lead-status err';
-            }
-        } catch (err) {
-            console.error('Отправка заявки не удалась:', err);
-            status.textContent = t('form_err');
-            status.className = 'lead-status err';
-        } finally {
-            btn.disabled = false;
-        }
-    });
-}
 
 // Открываем кейс сразу, если страницу открыли по прямой ссылке на него
 function openCaseFromHash() {
@@ -1441,8 +1260,6 @@ document.addEventListener('DOMContentLoaded', () => {
         try { openCaseFromHash(); } catch (e) { console.error(e); }
     }, 200);
 
-    // 6. Форма заявки
-    try { initLeadForm(); } catch (e) { console.error('initLeadForm failed:', e); }
 });
 
 window.addEventListener('resize', initBg);
