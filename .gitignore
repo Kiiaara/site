@@ -30,3 +30,6 @@ npm-debug.log*
 .cache/
 .temp/
 tmp/
+
+# Local-only docs
+CLAUDE.md
