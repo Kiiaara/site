@@ -1015,6 +1015,55 @@ body {
 
 // Отправка формы заявки. Токен бота живёт на сервере, здесь только адрес сервиса
 
+// Кейсы из CRM: CRM-influence публикует их в cases.json (тот же формат, что массив allCases).
+// Они добавляются к кейсам, вписанным в этот файл вручную. Нет файла или он битый -
+// сайт просто показывает только ручные кейсы.
+async function loadCrmCases() {
+    let data;
+    try {
+        const r = await fetch('cases.json', { cache: 'no-cache' });
+        if (!r.ok) return;
+        data = await r.json();
+    } catch (e) {
+        return;
+    }
+    const langs = ['ru', 'en', 'zh'];
+    const text = (v) => {
+        const out = {};
+        langs.forEach(l => { out[l] = (v && (v[l] || v.ru)) || ''; });
+        return out;
+    };
+    const list = (v) => {
+        const out = {};
+        langs.forEach(l => {
+            const items = v && Array.isArray(v[l]) && v[l].length ? v[l] : (v && Array.isArray(v.ru) ? v.ru : []);
+            out[l] = items;
+        });
+        return out;
+    };
+    let added = 0;
+    (Array.isArray(data && data.cases) ? data.cases : []).forEach(c => {
+        if (!c || !c.title || !c.title.ru) return;
+        if (c.crmId && allCases.some(x => x.crmId === c.crmId)) return;
+        allCases.push({
+            crmId: c.crmId,
+            img: c.img || '',
+            tag: c.tag || 'Games',
+            title: text(c.title),
+            mini: text(c.mini),
+            task: text(c.task),
+            doing: list(c.doing),
+            result: list(c.result),
+        });
+        added++;
+    });
+    if (!added) return;
+    renderCases(activeFilter);
+    // прямая ссылка могла вести на кейс из CRM, которого не было при первой попытке
+    const modal = document.getElementById('projectModal');
+    if (!modal || modal.style.display !== 'flex') openCaseFromHash();
+}
+
 // Открываем кейс сразу, если страницу открыли по прямой ссылке на него
 function openCaseFromHash() {
     const hash = location.hash;
@@ -1259,6 +1308,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         try { openCaseFromHash(); } catch (e) { console.error(e); }
     }, 200);
+
+    // 6. Догружаем кейсы, опубликованные из CRM (cases.json)
+    loadCrmCases().catch(e => console.error('crm cases failed:', e));
 
 });
 
