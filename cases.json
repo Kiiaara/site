@@ -1,0 +1,94 @@
+{
+  "cases": [
+    {
+      "crmId": 2,
+      "img": "assets/images/crm/case-2.webp",
+      "tag": "Games",
+      "title": {
+        "ru": "BuffBuff",
+        "en": "BuffBuff",
+        "zh": "BuffBuff"
+      },
+      "mini": {
+        "ru": "34к+ просмотров",
+        "en": "34к+ просмотров",
+        "zh": "34к+ просмотров"
+      },
+      "task": {
+        "ru": "Интеграция на канале",
+        "en": "Интеграция на канале",
+        "zh": "Интеграция на канале"
+      },
+      "doing": {
+        "ru": [
+          "Проведен спецстрим на канале https://www.twitch.tv/soonvooshko по игре Genshin Impact",
+          "Проведена интеграция сервиса пополнения BuffBuff на пополнение в Genshin Impact",
+          "Размещен брендинг BuffBuff"
+        ],
+        "en": [
+          "Проведен спецстрим на канале https://www.twitch.tv/soonvooshko по игре Genshin Impact",
+          "Проведена интеграция сервиса пополнения BuffBuff на пополнение в Genshin Impact",
+          "Размещен брендинг BuffBuff"
+        ],
+        "zh": [
+          "Проведен спецстрим на канале https://www.twitch.tv/soonvooshko по игре Genshin Impact",
+          "Проведена интеграция сервиса пополнения BuffBuff на пополнение в Genshin Impact",
+          "Размещен брендинг BuffBuff"
+        ]
+      },
+      "result": {
+        "ru": [
+          "Более 34 тыс. просмотров трансляции soonvooshko"
+        ],
+        "en": [
+          "Более 34 тыс. просмотров трансляции soonvooshko"
+        ],
+        "zh": [
+          "Более 34 тыс. просмотров трансляции soonvooshko"
+        ]
+      }
+    },
+    {
+      "crmId": 1,
+      "img": "assets/images/crm/case-1.webp",
+      "tag": "Games",
+      "title": {
+        "ru": "Poco F9 ULTRA",
+        "en": "Poco F9 ULTRA",
+        "zh": "Poco F9 ULTRA"
+      },
+      "mini": {
+        "ru": "22к+ просмотров",
+        "en": "22к+ просмотров",
+        "zh": "22к+ просмотров"
+      },
+      "task": {
+        "ru": "Публикация Shorts с демонстрацией смартфона и его производительности",
+        "en": "Публикация Shorts с демонстрацией смартфона и его производительности",
+        "zh": "Публикация Shorts с демонстрацией смартфона и его производительности"
+      },
+      "doing": {
+        "ru": [
+          "Опубликован Shorts на канале https://www.youtube.com/@tpabomah_"
+        ],
+        "en": [
+          "Опубликован Shorts на канале https://www.youtube.com/@tpabomah_"
+        ],
+        "zh": [
+          "Опубликован Shorts на канале https://www.youtube.com/@tpabomah_"
+        ]
+      },
+      "result": {
+        "ru": [
+          "Более 22 тыс. просмотров ролика на канале YT https://www.youtube.com/@tpabomah_"
+        ],
+        "en": [
+          "Более 22 тыс. просмотров ролика на канале YT https://www.youtube.com/@tpabomah_"
+        ],
+        "zh": [
+          "Более 22 тыс. просмотров ролика на канале YT https://www.youtube.com/@tpabomah_"
+        ]
+      }
+    }
+  ]
+}
