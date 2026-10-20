@@ -803,15 +803,31 @@ body {
             "mikerina": "https://www.twitch.tv/mikerina"
         };
 
+        /* Кейсы из CRM приходят с готовым html в полях taskHtml/doingHtml/resultHtml:
+           там ссылки уже свёрнуты в ник (https://twitch.tv/nick показывается как nick).
+           Если поля нет (старый ручной кейс), берём обычное текстовое поле. */
+        function pickHtml(c, field, lang) {
+            const rich = c[field + "Html"];
+            const value = (rich && rich[lang]) || c[field][lang];
+            return value;
+        }
+
         function linkify(text) {
             if (!text) return "";
-            let result = text;
+            /* Кейсы из CRM уже содержат готовые ссылки <a>...</a>. Чтобы не обернуть
+               ник внутри такой ссылки второй раз, вырезаем их, обрабатываем остальное
+               и возвращаем на место. */
+            const kept = [];
+            let result = String(text).replace(/<a\b[^>]*>.*?<\/a>/gi, m => {
+                kept.push(m);
+                return `\u0000${kept.length - 1}\u0000`;
+            });
             const names = Object.keys(links).sort((a, b) => b.length - a.length);
             names.forEach(name => {
                 const regex = new RegExp(`(?![^<]*>)\\b(${name})\\b`, 'gi');
                 result = result.replace(regex, `<a href="${links[name]}" target="_blank"><strong>$1</strong></a>`);
             });
-            return result;
+            return result.replace(/\u0000(\d+)\u0000/g, (m, i) => kept[Number(i)]);
         }
 
         const allCases = [
@@ -976,9 +992,9 @@ body {
         <span class="close-modal" onclick="closeModal()">&times;</span>
         ${imgHtml}
         <h2>${c.title[currentLang]}</h2>
-        <h4>${i18n[currentLang].desc}</h4><p>${linkify(c.task[currentLang])}</p>
-        <h4>${i18n[currentLang].tasks}</h4><ul>${c.doing[currentLang].map(d => `<li>${linkify(d)}</li>`).join('')}</ul>
-        <h4>${i18n[currentLang].results}</h4><ul>${c.result[currentLang].map(r => `<li>${linkify(r)}</li>`).join('')}</ul>
+        <h4>${i18n[currentLang].desc}</h4><p>${linkify(pickHtml(c, 'task', currentLang))}</p>
+        <h4>${i18n[currentLang].tasks}</h4><ul>${pickHtml(c, 'doing', currentLang).map(d => `<li>${linkify(d)}</li>`).join('')}</ul>
+        <h4>${i18n[currentLang].results}</h4><ul>${pickHtml(c, 'result', currentLang).map(r => `<li>${linkify(r)}</li>`).join('')}</ul>
     `;
     const modal = document.getElementById('projectModal');
     modal.style.display = 'flex'; // Показываем
