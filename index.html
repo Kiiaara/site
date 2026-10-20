@@ -1070,6 +1070,11 @@ async function loadCrmCases() {
             task: text(c.task),
             doing: list(c.doing),
             result: list(c.result),
+            // готовый html от CRM: ссылки там уже свёрнуты в ник. Без этих полей
+            // pickHtml берёт обычный текст, и на сайте висит голый адрес
+            taskHtml: c.taskHtml ? text(c.taskHtml) : undefined,
+            doingHtml: c.doingHtml ? list(c.doingHtml) : undefined,
+            resultHtml: c.resultHtml ? list(c.resultHtml) : undefined,
         });
         added++;
     });
