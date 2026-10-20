@@ -11,13 +11,13 @@
       },
       "mini": {
         "ru": "34к+ просмотров",
-        "en": "34k+ views",
-        "zh": "超过 34,000 次观看"
+        "en": "34K+ views",
+        "zh": "34千+ 观看次数"
       },
       "task": {
         "ru": "Интеграция на канале",
-        "en": "Integration on the channel",
-        "zh": "渠道整合"
+        "en": "Sponsored integration on the channel",
+        "zh": "频道赞助整合"
       },
       "doing": {
         "ru": [
@@ -26,14 +26,14 @@
           "Размещен брендинг BuffBuff"
         ],
         "en": [
-          "A special stream was held on the https://www.twitch.tv/soonvooshko channel for the game Genshin Impact",
-          "The BuffBuff replenishment service for replenishment has been integrated into Genshin Impact",
-          "BuffBuff branding placed"
+          "Hosted a special stream on the channel https://www.twitch.tv/soonvooshko for the game Genshin Impact",
+          "Conducted a sponsored integration of the BuffBuff top‑up service for Genshin Impact",
+          "Placed BuffBuff branding"
         ],
         "zh": [
-          "https://www.twitch.tv/soonvooshko频道为《原神》游戏举办了特别直播",
-          "补给的BuffBuff补给服务已整合至原神",
-          "放置 BuffBuff 品牌"
+          "在频道 https://www.twitch.tv/soonvooshko 上举办了《原神》特别直播",
+          "在《原神》中进行BuffBuff充值服务的赞助整合",
+          "放置了BuffBuff品牌标识"
         ]
       },
       "result": {
@@ -41,16 +41,16 @@
           "Более 34 тыс. просмотров трансляции soonvooshko"
         ],
         "en": [
-          "More than 34 thousand views of the soonvooshko broadcast"
+          "Over 34K views of the soonvooshko broadcast"
         ],
         "zh": [
-          "Soonvooshko 广播的观看次数超过 34,000 次"
+          "soonvooshko 直播观看次数超过34千次"
         ]
       },
       "taskHtml": {
         "ru": "Интеграция на канале",
-        "en": "Integration on the channel",
-        "zh": "渠道整合"
+        "en": "Sponsored integration on the channel",
+        "zh": "频道赞助整合"
       },
       "doingHtml": {
         "ru": [
@@ -59,14 +59,14 @@
           "Размещен брендинг BuffBuff"
         ],
         "en": [
-          "A special stream was held on the <a href=\"https://www.twitch.tv/soonvooshko\" target=\"_blank\" rel=\"noopener\">soonvooshko</a> channel for the game Genshin Impact",
-          "The BuffBuff replenishment service for replenishment has been integrated into Genshin Impact",
-          "BuffBuff branding placed"
+          "Hosted a special stream on the channel <a href=\"https://www.twitch.tv/soonvooshko\" target=\"_blank\" rel=\"noopener\">soonvooshko</a> for the game Genshin Impact",
+          "Conducted a sponsored integration of the BuffBuff top‑up service for Genshin Impact",
+          "Placed BuffBuff branding"
         ],
         "zh": [
-          "<a href=\"https://www.twitch.tv/soonvooshko\" target=\"_blank\" rel=\"noopener\">soonvooshko</a>频道为《原神》游戏举办了特别直播",
-          "补给的BuffBuff补给服务已整合至原神",
-          "放置 BuffBuff 品牌"
+          "在频道 <a href=\"https://www.twitch.tv/soonvooshko\" target=\"_blank\" rel=\"noopener\">soonvooshko</a> 上举办了《原神》特别直播",
+          "在《原神》中进行BuffBuff充值服务的赞助整合",
+          "放置了BuffBuff品牌标识"
         ]
       },
       "resultHtml": {
@@ -74,10 +74,10 @@
           "Более 34 тыс. просмотров трансляции soonvooshko"
         ],
         "en": [
-          "More than 34 thousand views of the soonvooshko broadcast"
+          "Over 34K views of the soonvooshko broadcast"
         ],
         "zh": [
-          "Soonvooshko 广播的观看次数超过 34,000 次"
+          "soonvooshko 直播观看次数超过34千次"
         ]
       }
     },
@@ -92,23 +92,23 @@
       },
       "mini": {
         "ru": "22к+ просмотров",
-        "en": "22k+ views",
-        "zh": "超过 22,000 次观看"
+        "en": "22K+ views",
+        "zh": "22K+ 观看次数"
       },
       "task": {
         "ru": "Публикация Shorts с демонстрацией смартфона и его производительности",
-        "en": "Shorts publication demonstrating the smartphone and its performance",
-        "zh": "Shorts 出版物展示了智能手机及其性能"
+        "en": "Publication of Shorts showcasing the smartphone and its performance",
+        "zh": "发布 Shorts，展示智能手机及其性能"
       },
       "doing": {
         "ru": [
           "Опубликован Shorts на канале https://www.youtube.com/@tpabomah_"
         ],
         "en": [
-          "Published Shorts on channel https://www.youtube.com/@tpabomah_"
+          "Published Shorts on the channel https://www.youtube.com/@tpabomah_"
         ],
         "zh": [
-          "在 https://www.youtube.com/@tpabomah_ 频道上发布的短片"
+          "在频道 https://www.youtube.com/@tpabomah_ 上发布 Shorts"
         ]
       },
       "result": {
@@ -116,26 +116,26 @@
           "Более 22 тыс. просмотров ролика на канале YT https://www.youtube.com/@tpabomah_"
         ],
         "en": [
-          "More than 22 thousand views of the video on the YT https://www.youtube.com/@tpabomah_ channel"
+          "Over 22K views of the video on the YT channel https://www.youtube.com/@tpabomah_"
         ],
         "zh": [
-          "YT https://www.youtube.com/@tpabomah_ 频道上该视频的观看次数超过 22,000 次"
+          "视频在 YT 频道 https://www.youtube.com/@tpabomah_ 上获得 22K+ 观看次数"
         ]
       },
       "taskHtml": {
         "ru": "Публикация Shorts с демонстрацией смартфона и его производительности",
-        "en": "Shorts publication demonstrating the smartphone and its performance",
-        "zh": "Shorts 出版物展示了智能手机及其性能"
+        "en": "Publication of Shorts showcasing the smartphone and its performance",
+        "zh": "发布 Shorts，展示智能手机及其性能"
       },
       "doingHtml": {
         "ru": [
           "Опубликован Shorts на канале <a href=\"https://www.youtube.com/@tpabomah_\" target=\"_blank\" rel=\"noopener\">tpabomah_</a>"
         ],
         "en": [
-          "Published Shorts on channel <a href=\"https://www.youtube.com/@tpabomah_\" target=\"_blank\" rel=\"noopener\">tpabomah_</a>"
+          "Published Shorts on the channel <a href=\"https://www.youtube.com/@tpabomah_\" target=\"_blank\" rel=\"noopener\">tpabomah_</a>"
         ],
         "zh": [
-          "在 <a href=\"https://www.youtube.com/@tpabomah_\" target=\"_blank\" rel=\"noopener\">tpabomah_</a> 频道上发布的短片"
+          "在频道 <a href=\"https://www.youtube.com/@tpabomah_\" target=\"_blank\" rel=\"noopener\">tpabomah_</a> 上发布 Shorts"
         ]
       },
       "resultHtml": {
@@ -143,10 +143,10 @@
           "Более 22 тыс. просмотров ролика на канале YT <a href=\"https://www.youtube.com/@tpabomah_\" target=\"_blank\" rel=\"noopener\">tpabomah_</a>"
         ],
         "en": [
-          "More than 22 thousand views of the video on the YT <a href=\"https://www.youtube.com/@tpabomah_\" target=\"_blank\" rel=\"noopener\">tpabomah_</a> channel"
+          "Over 22K views of the video on the YT channel <a href=\"https://www.youtube.com/@tpabomah_\" target=\"_blank\" rel=\"noopener\">tpabomah_</a>"
         ],
         "zh": [
-          "YT <a href=\"https://www.youtube.com/@tpabomah_\" target=\"_blank\" rel=\"noopener\">tpabomah_</a> 频道上该视频的观看次数超过 22,000 次"
+          "视频在 YT 频道 <a href=\"https://www.youtube.com/@tpabomah_\" target=\"_blank\" rel=\"noopener\">tpabomah_</a> 上获得 22K+ 观看次数"
         ]
       }
     }
